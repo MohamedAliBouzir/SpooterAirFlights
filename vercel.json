@@ -1,8 +1,8 @@
 {
     "rewrites": [
         {
-            "source": "/api/serpapi/:path*",
-            "destination": "https://serpapi.com/:path*"
+            "source": "/api/serpapi/search.json",
+            "destination": "/api/serpapi"
         },
         {
             "source": "/((?!api/|.*\\..*).*)",
