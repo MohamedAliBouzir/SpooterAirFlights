@@ -16,6 +16,7 @@ import 'swiper/css/autoplay';
 import 'swiper/css/effect-fade';
 
 import { homeStyles } from '@/styles/pages/Home.style';
+import NewsSection from '@/components/Home/NewsSection';
 
 // Import images
 import aiAssistantImg from '@/assets/home/ai_travel_assistant.png';
@@ -222,6 +223,9 @@ const Home = () => {
                     </Box>
                 </Box>
             </Container>
+
+            {/* Latest News Section */}
+            <NewsSection />
         </Box>
     );
 };

@@ -7,7 +7,11 @@ export const footerStyles = {
         bgcolor: 'background.paper',
         borderTop: `1px solid ${theme.palette.divider}`,
         mt: 'auto',
-        width: '100%'
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
     }),
     container: {
         maxWidth: 'lg'

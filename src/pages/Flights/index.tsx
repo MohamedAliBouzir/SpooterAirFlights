@@ -1,13 +1,42 @@
 import { useEffect, useMemo } from 'react';
 import { Box, Typography, useTheme } from '@mui/material';
-import Grid from '@mui/material/Grid';
 import FlightSearchForm from '@/components/Flights/FlightSearchForm';
 import FlightList from '@/components/Flights/FlightList';
 import FlightFilters from '@/components/Flights/FlightFilters';
 import PriceGraph from '@/components/Flights/PriceGraph';
-import { useFlightStore } from '@/hooks/useFlightStore';
-import { dummyFlights, dummyPriceTrends } from '@/assets/data/dummyFlights';
+import { useFlightStore, type Flight } from '@/hooks/useFlightStore';
 import { flightsPageStyles } from '@/styles/pages/Flights.style';
+
+const generateTrendsFromFlights = (flights: Flight[]) => {
+    if (flights.length === 0) return [];
+
+    // Group by day-hour to show trends clearly
+    const buckets: { [key: string]: { sum: number; count: number } } = {};
+
+    flights.forEach(f => {
+        const date = new Date(f.departure.at);
+        if (isNaN(date.getTime())) return;
+
+        // Use a format like "HH:00" for intra-day or "MMM DD" for multi-day
+        // For simplicity, let's keep HH:00 if most flights are on same day
+        const key = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        if (!buckets[key]) buckets[key] = { sum: 0, count: 0 };
+        buckets[key].sum += f.price;
+        buckets[key].count += 1;
+    });
+
+    return Object.entries(buckets)
+        .map(([time, data]) => ({
+            date: time,
+            price: Math.floor(data.sum / data.count),
+            count: data.count
+        }))
+        .sort((a, b) => {
+            // Sort by time
+            return a.date.localeCompare(b.date);
+        });
+};
 
 const Flights = () => {
     const theme = useTheme();
@@ -15,49 +44,49 @@ const Flights = () => {
         loading,
         results,
         filters,
-        setResults,
-        setPriceTrends,
-        setLoading,
+        searchParams,
+        searchFlights,
+        setPriceTrends
     } = useFlightStore();
 
-    // Initial Load: Display data on mount as requested
+    // Initial Load: Fetch real data
     useEffect(() => {
         if (results.length === 0 && !loading) {
-            setLoading(true);
-            const timer = setTimeout(() => {
-                setResults(dummyFlights);
-                setPriceTrends(dummyPriceTrends);
-                setLoading(false);
-            }, 800);
-            return () => clearTimeout(timer);
+            searchFlights();
         }
-    }, [results.length, loading, setLoading, setResults, setPriceTrends]);
+    }, [results.length]); // Relaxed dependency
 
     // Complex filtering logic
     const filteredResults = useMemo(() => {
         return results.filter(flight => {
+            // Filter by origin airport if specified
+            if (searchParams.origin && flight.departure.code !== searchParams.origin) return false;
+
+            // Filter by destination airport if specified
+            if (searchParams.destination && flight.arrival.code !== searchParams.destination) return false;
+
+            // Filter by price
             if (filters.maxPrice !== null && flight.price > filters.maxPrice) return false;
+
+            // Filter by stops
             if (filters.maxStops !== null && flight.stops > filters.maxStops) return false;
+
+            // Filter by airlines
             if (filters.airlines.length > 0 && !filters.airlines.includes(flight.airline)) return false;
+
             return true;
         });
-    }, [results, filters]);
+    }, [results, filters, searchParams]);
 
-    // Live update for Price Graph based on filters
+    // Live update for Price Graph based on filtered results
     const filteredTrends = useMemo(() => {
-        if (filteredResults.length === 0) return [];
-        return dummyPriceTrends.map(t => ({
-            ...t,
-            price: t.price + (filteredResults.length * 2),
-            count: Math.max(0, t.count - (dummyFlights.length - filteredResults.length))
-        }));
+        return generateTrendsFromFlights(filteredResults);
     }, [filteredResults]);
 
     useEffect(() => {
-        if (results.length > 0) {
-            setPriceTrends(filteredTrends);
-        }
-    }, [filteredTrends, setPriceTrends, results.length]);
+        setPriceTrends(filteredTrends);
+    }, [filteredTrends, setPriceTrends]);
+
 
     return (
         <Box sx={flightsPageStyles.root}>
@@ -78,16 +107,21 @@ const Flights = () => {
             <Box sx={flightsPageStyles.container}>
                 <FlightSearchForm />
 
-                <Grid container spacing={4} sx={flightsPageStyles.contentGrid}>
+                <Box sx={{
+                    display: 'flex',
+                    flexDirection: { xs: 'column', md: 'row' },
+                    gap: 4,
+                    ...flightsPageStyles.contentGrid
+                }}>
                     {/* Filters Sidebar */}
-                    <Grid size={{ xs: 12, md: 3 }}>
+                    <Box sx={{ width: { xs: '100%', md: '25%' }, minWidth: { md: 280 } }}>
                         <Box sx={flightsPageStyles.filterSidebar()}>
                             <FlightFilters />
                         </Box>
-                    </Grid>
+                    </Box>
 
                     {/* Main Content Area */}
-                    <Grid size={{ xs: 12, md: 9 }}>
+                    <Box sx={{ width: { xs: '100%', md: '75%' }, flex: 1 }}>
                         <Box sx={flightsPageStyles.resultsHeader}>
                             <Typography variant="h5" fontWeight="bold">
                                 {loading ? 'Finding the best deals...' : `${filteredResults.length} flights found`}
@@ -104,8 +138,8 @@ const Flights = () => {
                             </Typography>
                             <PriceGraph />
                         </Box>
-                    </Grid>
-                </Grid>
+                    </Box>
+                </Box>
             </Box>
         </Box>
     );

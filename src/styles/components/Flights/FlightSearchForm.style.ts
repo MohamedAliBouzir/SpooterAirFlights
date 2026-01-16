@@ -25,7 +25,7 @@ export const flightFormStyles = {
         mb: 2
     },
     gridContainer: {
-        alignItems: 'center'
+        alignItems: { xs: 'stretch', md: 'center' }
     },
     searchButton: {
         height: '56px',

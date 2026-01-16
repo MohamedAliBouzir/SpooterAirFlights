@@ -4,6 +4,7 @@ import { Box, CircularProgress } from '@mui/material';
 
 const Home = lazy(() => import('@/pages/Home'));
 const Flights = lazy(() => import('@/pages/Flights'));
+const Hotels = lazy(() => import('@/pages/Hotels'));
 const ComingSoon = lazy(() => import('@/pages/ComingSoon'));
 
 const Loading = () => (
@@ -18,7 +19,7 @@ export const ContentRoutes = () => {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/flights" element={<Flights />} />
-                <Route path="/hotels" element={<ComingSoon title="Hotels" />} />
+                <Route path="/hotels" element={<Hotels />} />
                 <Route path="/cars" element={<ComingSoon title="Cars" />} />
                 <Route path="/packages" element={<ComingSoon title="Packages" />} />
             </Routes>

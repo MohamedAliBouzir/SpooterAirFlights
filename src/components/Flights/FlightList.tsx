@@ -1,14 +1,16 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 import { useFlightStore, type Flight } from '@/hooks/useFlightStore';
 import FlightCard from './FlightCard';
 import FlightCardSkeleton from './FlightCardSkeleton';
 import { motion, AnimatePresence } from 'framer-motion';
+import { flightListStyles } from '@/styles/components/Flights/FlightList.style';
 
 interface FlightListProps {
     flights?: Flight[];
 }
 
 const FlightList = ({ flights }: FlightListProps) => {
+    const theme = useTheme();
     const { results, loading } = useFlightStore();
     const displayFlights = flights || results;
 
@@ -22,14 +24,7 @@ const FlightList = ({ flights }: FlightListProps) => {
 
     if (!displayFlights || displayFlights.length === 0) {
         return (
-            <Box sx={{
-                textAlign: 'center',
-                py: 10,
-                bgcolor: 'background.paper',
-                borderRadius: 4,
-                border: '1px dashed',
-                borderColor: 'divider'
-            }}>
+            <Box sx={flightListStyles.emptyState(theme)}>
                 <Typography variant="h6" color="text.secondary" fontWeight="bold">No flights match your filters.</Typography>
                 <Typography variant="body2" color="text.secondary">Try adjusting your price or airline preferences.</Typography>
             </Box>

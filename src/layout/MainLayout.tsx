@@ -2,6 +2,7 @@ import { Box } from '@mui/material';
 import Navbar from '@/components/UI/Navbar';
 import { FooterRoutes } from '@/routes/footerRoutes';
 import type { ReactNode } from 'react';
+import { mainLayoutStyles } from '@/styles/layout/MainLayout.style';
 
 interface MainLayoutProps {
     children: ReactNode;
@@ -9,9 +10,9 @@ interface MainLayoutProps {
 
 const MainLayout = ({ children }: MainLayoutProps) => {
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', width: '100%' }}>
+        <Box sx={mainLayoutStyles.root}>
             <Navbar />
-            <Box component="main" sx={{ flexGrow: 1, width: '100%', display: 'flex', flexDirection: 'column' }}>
+            <Box component="main" sx={mainLayoutStyles.main}>
                 {children}
             </Box>
             <FooterRoutes />

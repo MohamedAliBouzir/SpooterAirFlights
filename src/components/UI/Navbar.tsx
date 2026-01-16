@@ -1,18 +1,24 @@
-import { AppBar, Toolbar, Typography, Box, IconButton, useTheme } from '@mui/material';
+import { AppBar, Toolbar, Typography, Box, IconButton, useTheme, Drawer, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 import FlightIcon from '@mui/icons-material/Flight';
+import MenuIcon from '@mui/icons-material/Menu';
 import { useAppStore } from '@/hooks/useAppStore';
 import { navbarStyles } from '@/styles/components/UI/Navbar.style';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 const Navbar = () => {
     const { toggleMode, isFullScreen, toggleFullScreen } = useAppStore();
+    const [mobileOpen, setMobileOpen] = useState(false);
     const theme = useTheme();
     const location = useLocation();
+
+    const handleDrawerToggle = () => {
+        setMobileOpen(!mobileOpen);
+    };
 
     // Sync fullscreen state with actual browser fullscreen status
     useEffect(() => {
@@ -80,46 +86,103 @@ const Navbar = () => {
         { label: 'Packages', path: '/packages' },
     ];
 
+    const drawer = (
+        <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
+            <Box sx={{ my: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
+                <FlightIcon sx={{ color: 'secondary.main' }} />
+                <Typography variant="h6" sx={navbarStyles.logoText}>
+                    SPOOTER
+                </Typography>
+            </Box>
+            <List>
+                {navItems.map((item) => (
+                    <ListItem key={item.path} disablePadding>
+                        <ListItemButton component={Link} to={item.path} sx={{ textAlign: 'center' }}>
+                            <ListItemText
+                                primary={item.label}
+                                primaryTypographyProps={{
+                                    fontWeight: location.pathname === item.path ? 700 : 400,
+                                    color: location.pathname === item.path ? 'primary.main' : 'inherit'
+                                }}
+                            />
+                        </ListItemButton>
+                    </ListItem>
+                ))}
+            </List>
+        </Box>
+    );
+
     return (
-        <AppBar sx={navbarStyles.appBar(theme)}>
-            <Toolbar sx={navbarStyles.toolbar}>
-                {/* Logo */}
-                <Box component={Link} to="/" sx={navbarStyles.logoBox}>
-                    <FlightIcon sx={{ color: 'secondary.main', fontSize: '2rem' }} />
-                    <Typography sx={navbarStyles.logoText}>
-                        SPOOTER
-                    </Typography>
-                </Box>
-
-                {/* Navigation Links */}
-                <Box sx={navbarStyles.navLinks}>
-                    {navItems.map((item) => (
-                        <Typography
-                            key={item.path}
-                            component={Link}
-                            to={item.path}
-                            sx={navbarStyles.navLink(location.pathname === item.path)}
-                        >
-                            {item.label}
-                        </Typography>
-                    ))}
-                </Box>
-
-                {/* Actions */}
-                <Box sx={navbarStyles.actionsBox}>
-                    <IconButton onClick={toggleMode} color="inherit">
-                        {theme.palette.mode === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}
-                    </IconButton>
+        <>
+            <AppBar sx={navbarStyles.appBar(theme)}>
+                <Toolbar sx={navbarStyles.toolbar}>
+                    {/* Mobile Menu Button */}
                     <IconButton
-                        onClick={handleFullscreenToggle}
                         color="inherit"
-                        sx={{ display: { xs: 'none', sm: 'inline-flex' } }}
+                        aria-label="open drawer"
+                        edge="start"
+                        onClick={handleDrawerToggle}
+                        sx={{ mr: 2, display: { md: 'none' } }}
                     >
-                        {isFullScreen ? <FullscreenExitIcon /> : <FullscreenIcon />}
+                        <MenuIcon />
                     </IconButton>
-                </Box>
-            </Toolbar>
-        </AppBar>
+
+                    {/* Logo */}
+                    <Box component={Link} to="/" sx={navbarStyles.logoBox}>
+                        <FlightIcon sx={{ color: 'secondary.main', fontSize: '2rem' }} />
+                        <Typography sx={navbarStyles.logoText}>
+                            SPOOTER
+                        </Typography>
+                    </Box>
+
+                    {/* Navigation Links */}
+                    <Box sx={navbarStyles.navLinks}>
+                        {navItems.map((item) => (
+                            <Typography
+                                key={item.path}
+                                component={Link}
+                                to={item.path}
+                                sx={navbarStyles.navLink(location.pathname === item.path)}
+                            >
+                                {item.label}
+                            </Typography>
+                        ))}
+                    </Box>
+
+                    {/* Actions */}
+                    <Box sx={navbarStyles.actionsBox}>
+                        <IconButton onClick={toggleMode} color="inherit">
+                            {theme.palette.mode === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}
+                        </IconButton>
+                        <IconButton
+                            onClick={handleFullscreenToggle}
+                            color="inherit"
+                            sx={{ display: { xs: 'none', sm: 'inline-flex' } }}
+                        >
+                            {isFullScreen ? <FullscreenExitIcon /> : <FullscreenIcon />}
+                        </IconButton>
+                    </Box>
+                </Toolbar>
+            </AppBar>
+
+            {/* Mobile Drawer */}
+            <Box component="nav">
+                <Drawer
+                    variant="temporary"
+                    open={mobileOpen}
+                    onClose={handleDrawerToggle}
+                    ModalProps={{
+                        keepMounted: true, // Better open performance on mobile.
+                    }}
+                    sx={{
+                        display: { xs: 'block', md: 'none' },
+                        '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 240 },
+                    }}
+                >
+                    {drawer}
+                </Drawer>
+            </Box>
+        </>
     );
 };
 

@@ -1,4 +1,4 @@
-import { Box, Typography, Container, Grid, Link, Divider, IconButton, useTheme, useMediaQuery } from '@mui/material';
+import { Box, Typography, Container, Link, Divider, IconButton, useTheme, useMediaQuery } from '@mui/material';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
@@ -37,9 +37,9 @@ const Footer = ({ detail = false }: { detail?: boolean }) => {
     return (
         <Box sx={footerStyles.root(theme, true)}>
             <Container maxWidth="lg">
-                <Grid container spacing={4} sx={{ mb: 6 }}>
+                <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr 1fr', sm: '1fr 1fr 1fr 1fr' }, gap: 4, mb: 6 }}>
                     {footerSections.map((section) => (
-                        <Grid size={{ xs: 6, sm: 3 }} key={section.title}>
+                        <Box key={section.title}>
                             <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
                                 {section.title}
                             </Typography>
@@ -56,9 +56,9 @@ const Footer = ({ detail = false }: { detail?: boolean }) => {
                                     </Link>
                                 ))}
                             </Box>
-                        </Grid>
+                        </Box>
                     ))}
-                    <Grid size={{ xs: 6, sm: 3 }}>
+                    <Box>
                         <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
                             Get the Spooter app
                         </Typography>
@@ -66,8 +66,8 @@ const Footer = ({ detail = false }: { detail?: boolean }) => {
                             <Box component="img" sx={footerStyles.appBadge} src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" />
                             <Box component="img" sx={footerStyles.appBadge} src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" />
                         </Box>
-                    </Grid>
-                </Grid>
+                    </Box>
+                </Box>
 
                 <Divider sx={{ mb: 4 }} />
 

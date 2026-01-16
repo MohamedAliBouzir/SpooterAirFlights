@@ -35,9 +35,9 @@ export const flightsPageStyles = {
         }
     }),
     container: {
-        maxWidth: '80%',
+        maxWidth: { xs: '100%', lg: '1280px', xl: '1536px' },
         mx: 'auto',
-        px: { xs: 2, md: 4 },
+        px: { xs: 2, sm: 3, md: 4 },
         position: 'relative',
         width: '100%'
     },

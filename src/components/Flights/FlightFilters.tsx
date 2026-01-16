@@ -8,6 +8,15 @@ const FlightFilters = () => {
     const theme = useTheme();
     const { filters, setFilters, results } = useFlightStore();
 
+    const priceRange = useMemo(() => {
+        if (results.length === 0) return { min: 0, max: 2000 };
+        const prices = results.map(f => f.price);
+        return {
+            min: Math.floor(Math.min(...prices)),
+            max: Math.ceil(Math.max(...prices)) + 1000 // Add +1000 to max price
+        };
+    }, [results]);
+
     const handlePriceChange = (_event: Event, newValue: number | number[]) => {
         setFilters({ maxPrice: newValue as number });
     };
@@ -18,7 +27,7 @@ const FlightFilters = () => {
 
     const handleReset = () => {
         setFilters({
-            maxPrice: 1000,
+            maxPrice: null,
             maxStops: null,
             airlines: []
         });
@@ -55,17 +64,17 @@ const FlightFilters = () => {
             <Box sx={filterStyles.section}>
                 <Typography variant="subtitle2" fontWeight="bold" gutterBottom>Max Price</Typography>
                 <Slider
-                    value={filters.maxPrice || 1000}
-                    min={100}
-                    max={1000}
-                    step={50}
+                    value={filters.maxPrice ?? priceRange.max}
+                    min={priceRange.min}
+                    max={priceRange.max}
+                    step={10}
                     onChange={handlePriceChange}
                     valueLabelDisplay="auto"
                     sx={{ color: 'primary.main' }}
                 />
                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <Typography variant="caption" color="text.secondary">$100</Typography>
-                    <Typography variant="caption" color="text.secondary">${filters.maxPrice || 1000}</Typography>
+                    <Typography variant="caption" color="text.secondary">${priceRange.min}</Typography>
+                    <Typography variant="caption" color="text.secondary">${filters.maxPrice ?? priceRange.max}</Typography>
                 </Box>
             </Box>
 

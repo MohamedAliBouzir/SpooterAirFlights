@@ -1,6 +1,7 @@
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Paper, Typography, useTheme, Box } from '@mui/material';
 import { useFlightStore } from '@/hooks/useFlightStore';
+import { priceGraphStyles } from '@/styles/components/Flights/PriceGraph.style';
 
 const PriceGraph = () => {
     const theme = useTheme();
@@ -13,18 +14,12 @@ const PriceGraph = () => {
     return (
         <Paper
             elevation={2}
-            sx={{
-                p: 3,
-                borderRadius: 4,
-                background: theme.palette.mode === 'dark' ? theme.palette.background.paper : '#ffffff',
-                height: '100%',
-                minHeight: 300
-            }}
+            sx={priceGraphStyles.paper(theme)}
         >
-            <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
+            <Typography variant="h6" sx={priceGraphStyles.title}>
                 Price Trends
             </Typography>
-            <Box sx={{ width: '100%', height: 250 }}>
+            <Box sx={priceGraphStyles.chartContainer}>
                 <ResponsiveContainer width="100%" height="100%">
                     <AreaChart
                         data={priceTrends}
