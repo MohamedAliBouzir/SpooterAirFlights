@@ -80,7 +80,6 @@ const Navbar = () => {
         { label: 'Flights', path: '/flights' },
         { label: 'Hotels', path: '/hotels' },
         { label: 'Cars', path: '/cars' },
-        { label: 'Packages', path: '/packages' },
     ];
 
     const drawer = (

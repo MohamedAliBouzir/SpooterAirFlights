@@ -21,7 +21,6 @@ export const ContentRoutes = () => {
                 <Route path="/flights" element={<Flights />} />
                 <Route path="/hotels" element={<Hotels />} />
                 <Route path="/cars" element={<ComingSoon title="Cars" />} />
-                <Route path="/packages" element={<ComingSoon title="Packages" />} />
             </Routes>
         </Suspense>
     );
