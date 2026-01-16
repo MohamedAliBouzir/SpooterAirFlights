@@ -10,15 +10,11 @@ import { flightsPageStyles } from '@/styles/pages/Flights.style';
 const generateTrendsFromFlights = (flights: Flight[]) => {
     if (flights.length === 0) return [];
 
-    // Group by day-hour to show trends clearly
     const buckets: { [key: string]: { sum: number; count: number } } = {};
 
     flights.forEach(f => {
         const date = new Date(f.departure.at);
         if (isNaN(date.getTime())) return;
-
-        // Use a format like "HH:00" for intra-day or "MMM DD" for multi-day
-        // For simplicity, let's keep HH:00 if most flights are on same day
         const key = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
         if (!buckets[key]) buckets[key] = { sum: 0, count: 0 };
@@ -33,7 +29,6 @@ const generateTrendsFromFlights = (flights: Flight[]) => {
             count: data.count
         }))
         .sort((a, b) => {
-            // Sort by time
             return a.date.localeCompare(b.date);
         });
 };
@@ -49,36 +44,27 @@ const Flights = () => {
         setPriceTrends
     } = useFlightStore();
 
-    // Initial Load: Fetch real data
     useEffect(() => {
         if (results.length === 0 && !loading) {
             searchFlights();
         }
-    }, [results.length]); // Relaxed dependency
+    }, [results.length]);
 
-    // Complex filtering logic
     const filteredResults = useMemo(() => {
         return results.filter(flight => {
-            // Filter by origin airport if specified
             if (searchParams.origin && flight.departure.code !== searchParams.origin) return false;
-
-            // Filter by destination airport if specified
             if (searchParams.destination && flight.arrival.code !== searchParams.destination) return false;
 
-            // Filter by price
             if (filters.maxPrice !== null && flight.price > filters.maxPrice) return false;
 
-            // Filter by stops
             if (filters.maxStops !== null && flight.stops > filters.maxStops) return false;
 
-            // Filter by airlines
             if (filters.airlines.length > 0 && !filters.airlines.includes(flight.airline)) return false;
 
             return true;
         });
     }, [results, filters, searchParams]);
 
-    // Live update for Price Graph based on filtered results
     const filteredTrends = useMemo(() => {
         return generateTrendsFromFlights(filteredResults);
     }, [filteredResults]);
@@ -90,7 +76,6 @@ const Flights = () => {
 
     return (
         <Box sx={flightsPageStyles.root}>
-            {/* Header Section */}
             <Box sx={flightsPageStyles.header(theme)}>
                 <Typography variant="h2" fontWeight={900} sx={{
                     letterSpacing: '-0.03em',
@@ -103,7 +88,6 @@ const Flights = () => {
                 </Typography>
             </Box>
 
-            {/* Content Section */}
             <Box sx={flightsPageStyles.container}>
                 <FlightSearchForm />
 
@@ -113,14 +97,12 @@ const Flights = () => {
                     gap: 4,
                     ...flightsPageStyles.contentGrid
                 }}>
-                    {/* Filters Sidebar */}
                     <Box sx={{ width: { xs: '100%', md: '25%' }, minWidth: { md: 280 } }}>
                         <Box sx={flightsPageStyles.filterSidebar()}>
                             <FlightFilters />
                         </Box>
                     </Box>
 
-                    {/* Main Content Area */}
                     <Box sx={{ width: { xs: '100%', md: '75%' }, flex: 1 }}>
                         <Box sx={flightsPageStyles.resultsHeader}>
                             <Typography variant="h5" fontWeight="bold">

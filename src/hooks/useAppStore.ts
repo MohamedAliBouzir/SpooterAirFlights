@@ -13,7 +13,7 @@ interface AppState {
 export const useAppStore = create<AppState>()(
     persist(
         (set) => ({
-            mode: 'dark', // Default to dark as requested
+            mode: 'dark',
             isFullScreen: false,
             language: 'en',
             toggleMode: () => set((state) => ({ mode: state.mode === 'light' ? 'dark' : 'light' })),

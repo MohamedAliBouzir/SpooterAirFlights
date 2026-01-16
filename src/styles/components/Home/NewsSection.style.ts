@@ -9,7 +9,7 @@ export const newsSectionStyles = {
         mb: 6,
         textAlign: 'center',
     },
-    title: { // Removed the function signature as it's not dynamic based on theme, simplified to object
+    title: {
         fontWeight: 800,
         mb: 2,
         background: 'linear-gradient(45deg, #FF6B6B 30%, #4ECDC4 90%)',
@@ -30,7 +30,7 @@ export const newsSectionStyles = {
     }),
     imageContainer: {
         position: 'relative',
-        paddingTop: '56.25%', // 16:9 aspect ratio
+        paddingTop: '56.25%',
         overflow: 'hidden',
     },
     image: {

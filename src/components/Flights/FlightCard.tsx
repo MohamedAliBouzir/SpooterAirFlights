@@ -27,7 +27,6 @@ const FlightCard = ({ flight }: FlightCardProps) => {
                 gap: { xs: 2.5, md: 3 },
                 width: '100%'
             }}>
-                {/* Airline Logo & Name */}
                 <Box sx={{
                     display: 'flex',
                     alignItems: 'center',
@@ -68,7 +67,6 @@ const FlightCard = ({ flight }: FlightCardProps) => {
                         </Box>
                     </Box>
 
-                    {/* Mobile Price Display */}
                     <Box sx={{ display: { xs: 'block', md: 'none' }, textAlign: 'right' }}>
                         <Typography
                             variant="h6"
@@ -83,7 +81,6 @@ const FlightCard = ({ flight }: FlightCardProps) => {
                     </Box>
                 </Box>
 
-                {/* Flight Route Container */}
                 <Box sx={{
                     display: 'flex',
                     alignItems: 'center',
@@ -91,7 +88,6 @@ const FlightCard = ({ flight }: FlightCardProps) => {
                     flex: 1,
                     gap: 1
                 }}>
-                    {/* Departure Time & Code */}
                     <Box sx={{ minWidth: 80, textAlign: { xs: 'left', md: 'center' } }}>
                         <Typography variant="h6" fontWeight="700" sx={{ fontSize: '1.1rem', lineHeight: 1.2 }}>
                             {formatTime(flight.departure.at)}
@@ -101,7 +97,6 @@ const FlightCard = ({ flight }: FlightCardProps) => {
                         </Typography>
                     </Box>
 
-                    {/* Flight Path & Duration */}
                     <Box sx={{ flex: 1, px: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5, width: '100%', justifyContent: 'center' }}>
                             <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.7rem' }}>
@@ -132,7 +127,6 @@ const FlightCard = ({ flight }: FlightCardProps) => {
                         />
                     </Box>
 
-                    {/* Arrival Time & Code */}
                     <Box sx={{ minWidth: 80, textAlign: { xs: 'right', md: 'center' } }}>
                         <Typography variant="h6" fontWeight="700" sx={{ fontSize: '1.1rem', lineHeight: 1.2 }}>
                             {formatTime(flight.arrival.at)}
@@ -143,7 +137,6 @@ const FlightCard = ({ flight }: FlightCardProps) => {
                     </Box>
                 </Box>
 
-                {/* Price & CTA Deskstop */}
                 <Box sx={{
                     minWidth: { md: 200 },
                     textAlign: 'right',
@@ -188,7 +181,7 @@ const FlightCard = ({ flight }: FlightCardProps) => {
                             fontWeight: 700,
                             fontSize: '0.8rem',
                             textTransform: 'none',
-                            width: { xs: '100%', md: 'auto' }, // Full width button on mobile if needed, or keeping it auto. Let's make it 100% on mobile for easier tap
+                            width: { xs: '100%', md: 'auto' },
                             bgcolor: theme.palette.mode === 'dark' ? 'primary.main' : 'primary.dark',
                             '&:hover': {
                                 bgcolor: theme.palette.mode === 'dark' ? 'primary.dark' : 'primary.main',

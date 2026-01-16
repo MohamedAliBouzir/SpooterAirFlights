@@ -15,7 +15,6 @@ const HotelSearchForm = () => {
     const [allLocations, setAllLocations] = useState<HotelAutocompleteResult[]>([]);
     const [options, setOptions] = useState<HotelAutocompleteResult[]>([]);
 
-    // Load countries and cities on mount
     useEffect(() => {
         const loadLocations = async () => {
             try {
@@ -46,7 +45,6 @@ const HotelSearchForm = () => {
                 const combined = [...popularCities, ...formattedCountries];
                 setAllLocations(combined);
 
-                // Initialize options with popular cities so it's not empty on first click
                 setOptions(combined.slice(0, 20));
             } catch (error) {
                 console.error("Failed to load locations", error);
@@ -57,7 +55,6 @@ const HotelSearchForm = () => {
 
     const fetchOptions = useCallback((query: string) => {
         if (!query) {
-            // Show defaults if empty
             setOptions(allLocations.slice(0, 20));
             return;
         }
@@ -83,7 +80,6 @@ const HotelSearchForm = () => {
                 gap: 2,
                 ...hotelFormStyles.gridContainer
             }}>
-                {/* Location Autocomplete */}
                 <Box sx={{ gridColumn: { xs: 'span 1', md: 'span 6', lg: 'span 3' } }}>
                     <Autocomplete
                         fullWidth
@@ -146,7 +142,6 @@ const HotelSearchForm = () => {
                     />
                 </Box>
 
-                {/* Dates */}
                 <Box sx={{
                     gridColumn: { xs: 'span 1', md: 'span 6', lg: 'span 5' },
                     display: 'flex',
@@ -193,7 +188,6 @@ const HotelSearchForm = () => {
                     />
                 </Box>
 
-                {/* Guests */}
                 <Box sx={{ gridColumn: { xs: 'span 1', md: 'span 6', lg: 'span 2' } }}>
                     <TextField
                         fullWidth
@@ -213,7 +207,6 @@ const HotelSearchForm = () => {
                     />
                 </Box>
 
-                {/* Search Button */}
                 <Box sx={{ gridColumn: { xs: 'span 1', md: 'span 6', lg: 'span 2' } }}>
                     <Button
                         fullWidth

@@ -1,12 +1,12 @@
 import queryString from 'query-string';
 
-const API_KEY = import.meta.env.VITE_SERPAPI_KEY || 'YOUR_SERPAPI_KEY';
+const API_KEY = import.meta.env.VITE_SERPAPI_KEY;
 const BASE_URL = '/api/serpapi/search.json';
 
 export interface SerpApiFlightSegment {
     departure_airport: {
         name: string;
-        id: string; // IATA or custom ID
+        id: string;
         time: string;
     };
     arrival_airport: {

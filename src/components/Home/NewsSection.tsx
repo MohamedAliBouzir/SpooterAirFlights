@@ -15,7 +15,7 @@ const NewsSection = () => {
             try {
                 const response = await serpApiService.fetchFlightNews();
                 if (response.news_results) {
-                    setNews(response.news_results.slice(0, 8)); // Limit to first 8 items
+                    setNews(response.news_results.slice(0, 8));
                 } else {
                     setError('Failed to load news');
                 }
@@ -30,7 +30,7 @@ const NewsSection = () => {
         fetchNews();
     }, []);
 
-    if (error) return null; // Or render an error state if critical, but for news on homepage usually we fetch silently or hide.
+    if (error) return null;
 
     return (
         <Box sx={newsSectionStyles.sectionContainer(theme)}>

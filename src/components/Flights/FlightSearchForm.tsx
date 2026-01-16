@@ -22,7 +22,6 @@ const FlightSearchForm = () => {
     const [tabValue, setTabValue] = useState(0);
     const [searchLoading, setSearchLoading] = useState(false);
 
-    // Autocomplete states
     const [originOptions, setOriginOptions] = useState<AutocompleteResult[]>([]);
     const [destOptions, setDestOptions] = useState<AutocompleteResult[]>([]);
     const [loadingOrigin, setLoadingOrigin] = useState(false);
@@ -31,31 +30,22 @@ const FlightSearchForm = () => {
     const [originValue, setOriginValue] = useState<AutocompleteResult | null>(null);
     const [destValue, setDestValue] = useState<AutocompleteResult | null>(null);
 
-    // Queries
     const [originQuery, setOriginQuery] = useState('');
     const [destQuery, setDestQuery] = useState('');
 
-    // Helper to fallback to local data
     const getHybridOptions = async (query: string): Promise<AutocompleteResult[]> => {
         try {
-            // Only search Flights Autocomplete to avoid Hotels showing up
             const apiResults = await serpApiService.getAutocomplete(query);
             if (apiResults && apiResults.length > 0) return apiResults;
         } catch (err) {
             console.warn("SerpApi Autocomplete failed, falling back to local:", err);
         }
 
-        // Local fallback
         const localAirports = searchAirports(query, 20);
-
-        // Map local airports to AutocompleteResult
-        // We do NOT add fake "City" headers as selectable options to avoid ID errors.
-        // Instead, we rely on the UI to group them if we want, or just list them.
-        // Given the goal is "list of airports", returning them directly is safest.
         return localAirports.map(a => ({
             id: a.id,
             title: a.name,
-            subtitle: `${a.city}, ${a.country}`, // This can be used for grouping
+            subtitle: `${a.city}, ${a.country}`,
             type: 'airport'
         }));
     };
@@ -94,17 +84,14 @@ const FlightSearchForm = () => {
         []
     );
 
-    // Initialize/Sync values with SearchParams
     useEffect(() => {
         const syncValue = (code: string, currentVal: AutocompleteResult | null, setter: (v: AutocompleteResult | null) => void) => {
             if (!code) {
                 if (currentVal) setter(null);
                 return;
             }
-            // If we already have the correct object, don't change it
             if (currentVal && currentVal.id === code) return;
 
-            // Try to resolve from local DB as fallback
             const local = getAirportByCode(code);
             if (local) {
                 const localAny = local as any;
@@ -115,7 +102,6 @@ const FlightSearchForm = () => {
                     type: 'airport'
                 });
             } else {
-                // If not in local, just set a placeholder with the code
                 setter({
                     id: code,
                     title: code,
@@ -134,7 +120,6 @@ const FlightSearchForm = () => {
         const tripTypes: ('round-trip' | 'one-way')[] = ['round-trip', 'one-way'];
         setSearchParams({ tripType: tripTypes[newValue] });
 
-        // Clear return date for one-way trips
         if (newValue === 1) {
             setSearchParams({ returnDate: null });
         }
@@ -150,7 +135,6 @@ const FlightSearchForm = () => {
         }
     };
 
-    // Debounced search function
     const debouncedSearch = useCallback(
         debounce(() => {
             handleSearch();
@@ -158,7 +142,6 @@ const FlightSearchForm = () => {
         []
     );
 
-    // Auto-search when both origin and destination are selected
     useEffect(() => {
         if (searchParams.origin && searchParams.destination) {
             debouncedSearch();
@@ -196,9 +179,6 @@ const FlightSearchForm = () => {
                 gap: 2,
                 ...flightFormStyles.gridContainer
             }}>
-                {/* Origin & Destination */}
-                {/* Origin & Destination */}
-                {/* Origin & Destination */}
                 <Box sx={{
                     flex: { xs: '1 1 auto', md: 5 },
                     display: 'grid',

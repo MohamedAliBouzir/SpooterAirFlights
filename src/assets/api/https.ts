@@ -2,11 +2,9 @@ import wretch from 'wretch';
 import QueryString from 'query-string';
 import { z } from 'zod';
 
-// Basic Wretch setup
 export const http = wretch()
     .content("application/json");
 
-// Helper to use Zod for validation
 export const fetchAndValidate = async <T>(
     url: string,
     schema: z.ZodSchema<T>,
@@ -26,7 +24,6 @@ export const fetchAndValidate = async <T>(
     } else if (method === 'POST') {
         response = await request.post(body).json();
     }
-    // Add other methods as needed
 
     return schema.parse(response);
 };

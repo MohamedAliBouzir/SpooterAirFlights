@@ -11,7 +11,6 @@ interface HotelListProps {
 }
 
 const HotelList = ({ hotels, loading, error }: HotelListProps) => {
-    // Falls back to empty array if no hotels provided
     const displayResults = hotels || [];
 
     if (loading) {

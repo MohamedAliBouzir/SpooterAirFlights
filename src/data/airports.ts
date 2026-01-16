@@ -300,11 +300,3 @@ export const getAirportByCode = (code: string): Airport | undefined => {
     return AIRPORTS.find(airport => airport.id === code);
 };
 
-/**
- * Extract airports from flight data (for backward compatibility)
- * This is no longer needed since we have a static database
- */
-export const extractAirportsFromFlights = (_flights: any[]): Airport[] => {
-    // Return the full static database instead
-    return AIRPORTS;
-};

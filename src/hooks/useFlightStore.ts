@@ -2,16 +2,16 @@ import { create } from 'zustand';
 import { serpApiService, type SerpApiFlightOption } from '@/services/serpApi';
 
 export interface FlightSearchParams {
-    origin: string; // IATA code, e.g. ATL
-    destination: string; // IATA code, e.g. JFK
-    departureDate: string | null; // YYYY-MM-DD
+    origin: string;
+    destination: string;
+    departureDate: string | null;
     returnDate: string | null;
     passengers: number;
     tripType: 'round-trip' | 'one-way';
 }
 
 export interface FlightFilterParams {
-    maxStops: number | null; // null = any
+    maxStops: number | null;
     maxPrice: number | null;
     airlines: string[];
 }
@@ -23,23 +23,23 @@ export interface Flight {
     flightNumber: string;
     departure: {
         code: string;
-        at: string; // "YYYY-MM-DD HH:mm" or ISO
+        at: string;
     };
     arrival: {
         code: string;
         at: string;
     };
     price: number;
-    duration: string; // Formatted string "2h 30m"
+    duration: string;
     stops: number;
-    rawDuration: number; // minutes for sorting/filtering
-    isBestDeal?: boolean; // True if price < $200
+    rawDuration: number;
+    isBestDeal?: boolean;
 }
 
 export interface PriceTrendPoint {
     price: number;
     date: string;
-    count: number; // Using timestamp as 'count' or arbitrary value for graph x-axis if needed
+    count: number;
 }
 
 interface FlightState {
@@ -57,7 +57,7 @@ interface FlightState {
     swapLocations: () => void;
 }
 
-// Helpers
+
 const formatSerpApiDuration = (minutes: number): string => {
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;
@@ -67,7 +67,7 @@ const formatSerpApiDuration = (minutes: number): string => {
 export const useFlightStore = create<FlightState>((set, get) => ({
     searchParams: {
         origin: 'ATL',
-        destination: 'JFK', // Default demo route
+        destination: 'JFK',
         departureDate: new Date().toISOString().split('T')[0],
         returnDate: null,
         passengers: 1,
@@ -136,7 +136,7 @@ export const useFlightStore = create<FlightState>((set, get) => ({
                     duration: formatSerpApiDuration(f.total_duration),
                     stops: f.layovers ? f.layovers.length : 0,
                     rawDuration: f.total_duration,
-                    isBestDeal: f.price < 200 // Mark as best deal if under $200
+                    isBestDeal: f.price < 200
                 };
             });
 
@@ -148,7 +148,6 @@ export const useFlightStore = create<FlightState>((set, get) => ({
                     count: 1
                 }));
             } else {
-                // Better fallback for trends
                 trends = mappedFlights.map(f => ({
                     date: new Date(f.departure.at).toLocaleDateString([], { month: 'short', day: 'numeric' }),
                     price: f.price,

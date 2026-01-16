@@ -1,10 +1,8 @@
 import wretch from 'wretch';
 import queryString from 'query-string';
 
-// OpenSky Network API Base URL
 const BASE_URL = 'https://opensky-network.org/api';
 
-// Create a wretch instance
 const api = wretch(BASE_URL);
 
 export interface OpenSkyFlight {

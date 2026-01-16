@@ -13,22 +13,18 @@ const Hotels = () => {
 
     const [showFilters, setShowFilters] = useState(false);
 
-    // Initial Load: Fetch real data
     useEffect(() => {
         if (results.length === 0 && !loading) {
             searchHotels();
         }
-    }, [results.length]); // Relaxed dependency
+    }, [results.length]);
 
 
     const filteredResults = useMemo(() => {
         return results.filter(hotel => {
-            // Price Filter
             const price = hotel.rate_per_night?.extracted_lowest || 0;
             if (filters.minPrice !== null && price < filters.minPrice) return false;
             if (filters.maxPrice !== null && price > filters.maxPrice) return false;
-
-            // Rating Filter
             if (filters.rating !== null && (hotel.overall_rating || 0) < filters.rating) return false;
 
             return true;
@@ -37,7 +33,6 @@ const Hotels = () => {
 
     return (
         <Box sx={hotelPageStyles.root(theme)}>
-            {/* Hero Section */}
             <Box sx={hotelPageStyles.header(theme)}>
                 <Typography variant="h2" fontWeight="bold" sx={{ fontSize: { xs: '2rem', md: '4rem' } }}>
                     Find Your Perfect Stay
@@ -47,7 +42,6 @@ const Hotels = () => {
                 </Typography>
             </Box>
 
-            {/* Main Content */}
             <Box sx={hotelPageStyles.container}>
                 <HotelSearchForm />
 
@@ -57,9 +51,7 @@ const Hotels = () => {
                     gap: 4,
                     mt: { xs: 4, md: 8 }
                 }}>
-                    {/* Filters Sidebar */}
                     <Box sx={{ width: { xs: '100%', md: '300px' }, minWidth: { md: 280 }, flexShrink: 0 }}>
-                        {/* Mobile Toggle */}
                         <Button
                             variant="outlined"
                             fullWidth
@@ -78,7 +70,6 @@ const Hotels = () => {
                         </Box>
                     </Box>
 
-                    {/* Results Area */}
                     <Box sx={{ flex: 1, minWidth: 0 }}>
                         <Typography variant="h5" fontWeight="bold" sx={{ mb: 3 }}>
                             Explore Properties

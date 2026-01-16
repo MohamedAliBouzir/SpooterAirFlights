@@ -8,7 +8,7 @@ const PriceGraph = () => {
     const { priceTrends } = useFlightStore();
 
     if (!priceTrends || priceTrends.length === 0) {
-        return null; // Or a placeholder
+        return null;
     }
 
     return (

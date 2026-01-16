@@ -1,6 +1,6 @@
 export const palette = {
     primary: {
-        main: "#0A1929", // Dark blue
+        main: "#0A1929",
         light: "#182c42",
         dark: "#050e19",
         contrastText: "#ffffff",
@@ -14,7 +14,7 @@ export const palette = {
     background: {
         default: "#F3F6F9",
         paper: "#ffffff",
-        dark: "#0A1929", // For dark mode
+        dark: "#0A1929",
     },
     text: {
         primary: "#0A1929",
@@ -43,7 +43,6 @@ export const palette = {
 };
 
 export const globalStyles = {
-    // Global style definitions or constants
     borderRadius: 8,
     spacing: 8,
 };

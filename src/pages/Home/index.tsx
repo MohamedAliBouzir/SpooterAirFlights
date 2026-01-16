@@ -6,13 +6,9 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { motion } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay, EffectFade } from 'swiper/modules';
-// @ts-ignore
 import 'swiper/css';
-// @ts-ignore
 import 'swiper/css/navigation';
-// @ts-ignore
 import 'swiper/css/autoplay';
-// @ts-ignore
 import 'swiper/css/effect-fade';
 
 import { homeStyles } from '@/styles/pages/Home.style';
@@ -82,7 +78,6 @@ const Home = () => {
 
     return (
         <Box sx={homeStyles.root}>
-            {/* Hero Section with Background Carousel */}
             <Box sx={homeStyles.hero(theme)}>
                 <Box sx={homeStyles.heroBgCarousel}>
                     <Swiper
@@ -127,7 +122,6 @@ const Home = () => {
             </Box>
 
             <Container maxWidth="lg" sx={homeStyles.container}>
-                {/* Value Props Row */}
                 <Grid container spacing={3}>
                     {valueProps.map((prop, index) => (
                         <Grid size={{ xs: 12, sm: 6, md: 4 }} key={index}>
@@ -146,10 +140,9 @@ const Home = () => {
                     ))}
                 </Grid>
 
-                {/* Travel Pros Carousel */}
                 <Box sx={{ mt: 15 }}>
                     <Typography variant="h3" sx={homeStyles.travelProsTitle(theme)}>
-                        For travel pros
+                        Future Features
                     </Typography>
 
                     <Box sx={{ position: 'relative', ...homeStyles.travelProsSwiper }}>
@@ -211,7 +204,6 @@ const Home = () => {
                             ))}
                         </Swiper>
 
-                        {/* Custom Navigation Buttons */}
                         <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mt: 3 }}>
                             <IconButton className="swiper-button-prev-pros" sx={{ bgcolor: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : '#f5f7f9', '&:hover': { bgcolor: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.1)' : '#eef1f4' } }}>
                                 <KeyboardArrowLeftIcon />
@@ -224,7 +216,6 @@ const Home = () => {
                 </Box>
             </Container>
 
-            {/* Latest News Section */}
             <NewsSection />
         </Box>
     );

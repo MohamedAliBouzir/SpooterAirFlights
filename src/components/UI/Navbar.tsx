@@ -20,7 +20,6 @@ const Navbar = () => {
         setMobileOpen(!mobileOpen);
     };
 
-    // Sync fullscreen state with actual browser fullscreen status
     useEffect(() => {
         const handleFullscreenChange = () => {
             const isCurrentlyFullscreen = !!document.fullscreenElement;
@@ -51,7 +50,6 @@ const Navbar = () => {
                 !(document as any).mozFullScreenElement &&
                 !(document as any).msFullscreenElement) {
 
-                // Request fullscreen with browser prefixes
                 if (elem.requestFullscreen) {
                     await elem.requestFullscreen();
                 } else if (elem.webkitRequestFullscreen) {
@@ -62,7 +60,6 @@ const Navbar = () => {
                     await elem.msRequestFullscreen();
                 }
             } else {
-                // Exit fullscreen with browser prefixes
                 if (document.exitFullscreen) {
                     await document.exitFullscreen();
                 } else if ((document as any).webkitExitFullscreen) {
@@ -172,7 +169,7 @@ const Navbar = () => {
                     open={mobileOpen}
                     onClose={handleDrawerToggle}
                     ModalProps={{
-                        keepMounted: true, // Better open performance on mobile.
+                        keepMounted: true,
                     }}
                     sx={{
                         display: { xs: 'block', md: 'none' },
