@@ -1,4 +1,3 @@
-import type { SxProps, Theme } from '@mui/material/styles';
 
 export const comingSoonStyles = {
     container: {

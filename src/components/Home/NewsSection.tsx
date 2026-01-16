@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Box, Container, Typography, Grid, Card, CardContent, Avatar, Link, Skeleton } from '@mui/material';
 import { serpApiService, type NewsArticle } from '@/services/serpApi';
 import { newsSectionStyles } from '@/styles/components/Home/NewsSection.style';
-import NewspaperIcon from '@mui/icons-material/Newspaper';
 import { useTheme } from '@mui/material/styles';
 
 const NewsSection = () => {
