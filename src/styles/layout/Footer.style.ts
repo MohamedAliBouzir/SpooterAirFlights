@@ -1,6 +1,6 @@
 import type { SxProps, Theme } from '@mui/material/styles';
 
-export const footerStyles = {
+export const FooterStyle = {
     root: (theme: Theme, detail: boolean): SxProps<Theme> => ({
         pt: detail ? 8 : 2,
         pb: 4,

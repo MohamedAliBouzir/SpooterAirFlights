@@ -7,10 +7,11 @@ import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 import FlightIcon from '@mui/icons-material/Flight';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useAppStore } from '@/hooks/useAppStore';
-import { navbarStyles } from '@/styles/components/layouts/Navbar.style';
+import { HeaderStyle as navbarStyles } from '@/styles/layout/Header.style';
+import { navbarMenu } from '@/menu';
 import { useState, useEffect } from 'react';
 
-const Navbar = () => {
+const Header = () => {
     const { toggleMode, isFullScreen, toggleFullScreen } = useAppStore();
     const [mobileOpen, setMobileOpen] = useState(false);
     const theme = useTheme();
@@ -76,12 +77,6 @@ const Navbar = () => {
         }
     };
 
-    const navItems = [
-        { label: 'Flights', path: '/flights' },
-        { label: 'Hotels', path: '/hotels' },
-        { label: 'Cars', path: '/cars' },
-    ];
-
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
             <Box sx={{ my: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
@@ -91,7 +86,7 @@ const Navbar = () => {
                 </Typography>
             </Box>
             <List>
-                {navItems.map((item) => (
+                {navbarMenu.map((item) => (
                     <ListItem key={item.path} disablePadding>
                         <ListItemButton component={Link} to={item.path} sx={{ textAlign: 'center' }}>
                             <ListItemText
@@ -133,7 +128,7 @@ const Navbar = () => {
 
                     {/* Navigation Links */}
                     <Box sx={navbarStyles.navLinks}>
-                        {navItems.map((item) => (
+                        {navbarMenu.map((item) => (
                             <Typography
                                 key={item.path}
                                 component={Link}
@@ -182,4 +177,4 @@ const Navbar = () => {
     );
 };
 
-export default Navbar;
+export default Header;

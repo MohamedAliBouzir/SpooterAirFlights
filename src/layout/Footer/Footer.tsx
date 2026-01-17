@@ -3,7 +3,7 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
-import { footerStyles } from '@/styles/components/layouts/Footer.style';
+import { FooterStyle as footerStyles } from '@/styles/layout/Footer.style';
 
 const Footer = ({ detail = false }: { detail?: boolean }) => {
     const theme = useTheme();
@@ -33,6 +33,16 @@ const Footer = ({ detail = false }: { detail?: boolean }) => {
             </Box>
         );
     }
+
+    const legalLinks = ['Privacy', 'Terms & Conditions', 'Ad Choices'];
+    const socialLinks = [
+        { Icon: FacebookIcon, label: 'Facebook' },
+        { Icon: TwitterIcon, label: 'Twitter' },
+        { Icon: YouTubeIcon, label: 'YouTube' },
+        { Icon: InstagramIcon, label: 'Instagram' }
+    ];
+    const partnerLinks = ['SPOOTER', 'Booking.com', 'OpenTable', 'priceline', 'agoda'];
+    const settingLinks = ['English', '$ USD'];
 
     return (
         <Box sx={footerStyles.root(theme, true)}>
@@ -73,31 +83,41 @@ const Footer = ({ detail = false }: { detail?: boolean }) => {
 
                 <Box sx={footerStyles.bottomBar(isMobile)}>
                     <Box sx={footerStyles.legalLinks(isMobile)}>
-                        <Typography variant="caption" color="text.secondary">©{new Date().getFullYear()} SPOOTER</Typography>
-                        <Link href="#" underline="hover" color="text.secondary" sx={{ fontSize: '0.75rem' }}>Privacy</Link>
-                        <Link href="#" underline="hover" color="text.secondary" sx={{ fontSize: '0.75rem' }}>Terms & Conditions</Link>
-                        <Link href="#" underline="hover" color="text.secondary" sx={{ fontSize: '0.75rem' }}>Ad Choices</Link>
+                        <Typography variant="caption" color="text.secondary">© {new Date().getFullYear()} SPOOTER</Typography>
+                        {legalLinks.map((link) => (
+                            <Link key={link} href="#" underline="hover" color="text.secondary" sx={{ fontSize: '0.75rem' }}>
+                                {link}
+                            </Link>
+                        ))}
                     </Box>
 
                     <Box sx={footerStyles.socialBox}>
-                        <IconButton size="small"><FacebookIcon fontSize="small" /></IconButton>
-                        <IconButton size="small"><TwitterIcon fontSize="small" /></IconButton>
-                        <IconButton size="small"><YouTubeIcon fontSize="small" /></IconButton>
-                        <IconButton size="small"><InstagramIcon fontSize="small" /></IconButton>
+                        {socialLinks.map(({ Icon, label }) => (
+                            <IconButton key={label} size="small" aria-label={label}>
+                                <Icon fontSize="small" />
+                            </IconButton>
+                        ))}
                     </Box>
                 </Box>
 
                 <Box sx={footerStyles.partnerBar(isMobile)}>
                     <Box sx={footerStyles.partnerLinks}>
-                        <Typography variant="subtitle2" fontWeight="bold">SPOOTER</Typography>
-                        <Typography variant="caption" sx={{ fontWeight: 'bold' }}>Booking.com</Typography>
-                        <Typography variant="caption" sx={{ fontWeight: 'bold' }}>OpenTable</Typography>
-                        <Typography variant="caption" sx={{ fontWeight: 'bold' }}>priceline</Typography>
-                        <Typography variant="caption" sx={{ fontWeight: 'bold' }}>agoda</Typography>
+                        {partnerLinks.map((partner, index) => (
+                            <Typography
+                                key={partner}
+                                variant={index === 0 ? "subtitle2" : "caption"}
+                                fontWeight="bold"
+                            >
+                                {partner}
+                            </Typography>
+                        ))}
                     </Box>
                     <Box sx={footerStyles.settingLinks}>
-                        <Typography variant="caption">English</Typography>
-                        <Typography variant="caption">$ USD</Typography>
+                        {settingLinks.map((setting) => (
+                            <Typography key={setting} variant="caption">
+                                {setting}
+                            </Typography>
+                        ))}
                     </Box>
                 </Box>
             </Container>

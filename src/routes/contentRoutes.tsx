@@ -1,32 +1,34 @@
-import { Routes, Route } from 'react-router-dom';
-import { lazy, Suspense } from 'react';
-import { Box, CircularProgress } from '@mui/material';
-import { contentRoutesStyles } from '@/styles/routes/ContentRoutes.style';
+import { lazy } from "react";
+import type { RouteProps } from "react-router-dom";
+import { menuItems } from "@/menu";
 
-const Home = lazy(() => import('@/pages/Home'));
-const Flights = lazy(() => import('@/pages/Flights'));
-const Hotels = lazy(() => import('@/pages/Hotels'));
-const ComingSoon = lazy(() => import('@/pages/ComingSoon'));
-const FlightDetails = lazy(() => import('@/pages/Flights/FlightDetails'));
-const NotFound = lazy(() => import('@/pages/NotFound'));
+const Home = lazy(() => import("@/pages/Home"));
+const Flights = lazy(() => import("@/pages/Flights"));
+const Hotels = lazy(() => import("@/pages/Hotels"));
+const ComingSoon = lazy(() => import("@/pages/ComingSoon"));
+const FlightDetails = lazy(() => import("@/pages/Flights/FlightDetails"));
 
-const Loading = () => (
-    <Box sx={contentRoutesStyles.loadingContainer}>
-        <CircularProgress />
-    </Box>
-);
+const contents: RouteProps[] = [
+    {
+        path: menuItems.find(m => m.id === 'home')?.path || "/",
+        element: <Home />,
+    },
+    {
+        path: menuItems.find(m => m.id === 'flights')?.path || "/flights",
+        element: <Flights />,
+    },
+    {
+        path: menuItems.find(m => m.id === 'flightDetails')?.path || "/flights/:id",
+        element: <FlightDetails />,
+    },
+    {
+        path: menuItems.find(m => m.id === 'hotels')?.path || "/hotels",
+        element: <Hotels />,
+    },
+    {
+        path: menuItems.find(m => m.id === 'cars')?.path || "/cars",
+        element: <ComingSoon title="Cars" />,
+    },
+];
 
-export const ContentRoutes = () => {
-    return (
-        <Suspense fallback={<Loading />}>
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/flights" element={<Flights />} />
-                <Route path="/flights/:id" element={<FlightDetails />} />
-                <Route path="/hotels" element={<Hotels />} />
-                <Route path="/cars" element={<ComingSoon title="Cars" />} />
-                <Route path="*" element={<NotFound />} />
-            </Routes>
-        </Suspense>
-    );
-};
+export default contents;

@@ -1,6 +1,6 @@
 import type { SxProps, Theme } from '@mui/material/styles';
 
-export const navbarStyles = {
+export const HeaderStyle = {
     appBar: (theme: Theme): SxProps<Theme> => ({
         bgcolor: 'background.paper',
         color: 'text.primary',
