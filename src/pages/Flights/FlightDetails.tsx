@@ -68,12 +68,6 @@ const FlightDetails = () => {
         }
     }, [flight?.bookingToken, fetchBookingOptions]);
 
-    useEffect(() => {
-        if (!flight && results.length > 0) {
-            // Scroll to top or handle error
-        }
-    }, [flight, results, navigate]);
-
     if (!flight) {
         return (
             <Container sx={{ py: 8, textAlign: 'center' }}>
@@ -140,16 +134,13 @@ const FlightDetails = () => {
         return `${h} hr ${m} min`;
     };
 
-    // Statistical Price Insight Logic
     const priceAnalysis = useMemo(() => {
         const historyPrices = priceTrends.map(t => t.price);
         const currentPrices = results.map(r => r.price);
         const current = flight.price;
 
-        // Smart range extraction/estimation
         let [typicalLow, typicalHigh] = priceInsights?.typicalPriceRange || [0, 0];
 
-        // If API range is missing or looks suspicious (e.g. way below current results), estimate it
         const minResult = Math.min(...currentPrices, current);
         if (typicalHigh === 0 || typicalHigh < minResult * 0.4) {
             if (historyPrices.length > 10) {
@@ -166,7 +157,6 @@ const FlightDetails = () => {
         const minVal = Math.min(...allValues);
         const maxVal = Math.max(...allValues);
 
-        // Add 15% padding to the bounds for better visualization
         const padding = (maxVal - minVal) * 0.15;
         const absMin = Math.max(0, minVal - padding);
         const absMax = maxVal + padding;
@@ -178,7 +168,6 @@ const FlightDetails = () => {
         const highPos = getPos(typicalHigh);
         const currentPos = getPos(current);
 
-        // Stats
         const avgPrice = historyPrices.length > 0
             ? historyPrices.reduce((a, b) => a + b, 0) / historyPrices.length
             : (typicalLow + typicalHigh) / 2;
@@ -186,7 +175,6 @@ const FlightDetails = () => {
         const cheaperThanCount = results.filter(r => r.price > current).length;
         const cheaperPercent = Math.round((cheaperThanCount / Math.max(1, results.length)) * 100);
 
-        // Strict Price Level Assessment (matches the bar segments)
         let level = 'typical';
         if (current < typicalLow) level = 'low';
         else if (current > typicalHigh) level = 'high';
@@ -257,7 +245,6 @@ const FlightDetails = () => {
         return <CheckIcon sx={{ ...flightDetailsStyles.featureIcon, color: '#188038' }} />;
     };
 
-    // Format graph X-axis (e.g., "57 days ago")
     const formatGraphXAxis = (_tickItem: any, index: number) => {
         const total = priceTrends.length;
         const daysAgo = total - index - 1;
@@ -281,7 +268,7 @@ const FlightDetails = () => {
                     <Grid size={{ xs: 12, md: 8 }}>
                         <Paper sx={flightDetailsStyles.infoCard(theme)}>
                             <Box sx={{ mb: 4 }}>
-                                <Typography variant="h4" fontWeight="900" gutterBottom>Itinerary</Typography>
+                                <Typography variant="h4" fontWeight="900" gutterBottom>Details</Typography>
                                 <Typography variant="subtitle1" color="text.secondary" fontWeight="600">
                                     {flight.stops === 0 ? 'Nonstop' : `${flight.stops} stop${flight.stops > 1 ? 's' : ''}`} • {flight.duration}
                                 </Typography>
@@ -305,7 +292,6 @@ const FlightDetails = () => {
                                             </Box>
 
                                             <Box sx={{ position: 'relative', pl: 0.5 }}>
-                                                {/* Vertical Dotted Line */}
                                                 <Box sx={{
                                                     position: 'absolute',
                                                     left: 10,
@@ -316,7 +302,6 @@ const FlightDetails = () => {
                                                     zIndex: 1
                                                 }} />
 
-                                                {/* Departure Row */}
                                                 <Box sx={{ display: 'flex', gap: 3, mb: 3, position: 'relative', zIndex: 2 }}>
                                                     <Box sx={{ ...flightDetailsStyles.timelineDot(theme), flexShrink: 0, mt: '6px' }} />
                                                     <Box sx={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -336,14 +321,12 @@ const FlightDetails = () => {
                                                     </Box>
                                                 </Box>
 
-                                                {/* Travel Time Row */}
                                                 <Box sx={{ display: 'flex', gap: 3, mb: 3, pl: 5.5 }}>
                                                     <Typography sx={{ ...flightDetailsStyles.travelTimeText, fontSize: '0.9rem' }}>
                                                         Travel time: {formatDuration(segment.duration)}
                                                     </Typography>
                                                 </Box>
 
-                                                {/* Arrival Row */}
                                                 <Box sx={{ display: 'flex', gap: 3, position: 'relative', zIndex: 2 }}>
                                                     <Box sx={{ ...flightDetailsStyles.timelineDot(theme), flexShrink: 0, mt: '6px' }} />
                                                     <Box sx={{ flex: 1 }}>
@@ -405,10 +388,8 @@ const FlightDetails = () => {
                             </Grid>
                         </Paper>
 
-                        {/* Booking Options Section */}
                         {bookingOptions && bookingOptions.length > 0 && (
                             <Paper sx={flightDetailsStyles.bookingCard(theme)}>
-                                {/* Primary Provider Expanded Section */}
                                 {primaryProvider && (
                                     <Box>
                                         <Box sx={{ p: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -484,12 +465,11 @@ const FlightDetails = () => {
                                     </Box>
                                 )}
 
-                                {/* Other Providers List Section */}
                                 <Box>
                                     {Object.keys(groupedBookings)
                                         .filter(name => name !== primaryProvider)
                                         .map((name, idx) => {
-                                            const option = groupedBookings[name][0]; // Show first fare for other providers
+                                            const option = groupedBookings[name][0];
                                             return (
                                                 <Box key={idx} sx={flightDetailsStyles.bookingOptionRow(theme)}>
                                                     <Box sx={flightDetailsStyles.bookingProvider}>
