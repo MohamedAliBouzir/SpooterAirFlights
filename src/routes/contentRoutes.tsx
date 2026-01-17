@@ -1,19 +1,20 @@
 import { Routes, Route } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import { Box, CircularProgress } from '@mui/material';
+import { contentRoutesStyles } from '@/styles/routes/ContentRoutes.style';
 
 const Home = lazy(() => import('@/pages/Home'));
 const Flights = lazy(() => import('@/pages/Flights'));
 const Hotels = lazy(() => import('@/pages/Hotels'));
 const ComingSoon = lazy(() => import('@/pages/ComingSoon'));
+const FlightDetails = lazy(() => import('@/pages/Flights/FlightDetails'));
+const NotFound = lazy(() => import('@/pages/NotFound'));
 
 const Loading = () => (
-    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+    <Box sx={contentRoutesStyles.loadingContainer}>
         <CircularProgress />
     </Box>
 );
-
-const FlightDetails = lazy(() => import('@/pages/Flights/FlightDetails'));
 
 export const ContentRoutes = () => {
     return (
@@ -24,6 +25,7 @@ export const ContentRoutes = () => {
                 <Route path="/flights/:id" element={<FlightDetails />} />
                 <Route path="/hotels" element={<Hotels />} />
                 <Route path="/cars" element={<ComingSoon title="Cars" />} />
+                <Route path="*" element={<NotFound />} />
             </Routes>
         </Suspense>
     );

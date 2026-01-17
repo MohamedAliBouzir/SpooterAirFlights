@@ -248,7 +248,7 @@ export const flightDetailsStyles = {
         fontWeight: 700
     },
 
-    priceInsightColors: (theme: Theme, priceLevel: string) => {
+    priceInsightColors: (theme: Theme) => {
         const isDark = theme.palette.mode === 'dark';
         const colors = {
             low: isDark ? '#81c995' : '#34a853',
