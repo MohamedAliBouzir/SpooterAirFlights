@@ -39,7 +39,6 @@ const Flights = () => {
         loading,
         results,
         filters,
-        searchParams,
         searchFlights,
         setPriceTrends
     } = useFlightStore();
@@ -48,22 +47,17 @@ const Flights = () => {
         if (results.length === 0 && !loading) {
             searchFlights();
         }
-    }, [results.length]);
+    }, []);
+
 
     const filteredResults = useMemo(() => {
         return results.filter(flight => {
-            if (searchParams.origin && flight.departure.code !== searchParams.origin) return false;
-            if (searchParams.destination && flight.arrival.code !== searchParams.destination) return false;
-
             if (filters.maxPrice !== null && flight.price > filters.maxPrice) return false;
-
             if (filters.maxStops !== null && flight.stops > filters.maxStops) return false;
-
             if (filters.airlines.length > 0 && !filters.airlines.includes(flight.airline)) return false;
-
             return true;
         });
-    }, [results, filters, searchParams]);
+    }, [results, filters]);
 
     const filteredTrends = useMemo(() => {
         return generateTrendsFromFlights(filteredResults);

@@ -19,6 +19,8 @@ export interface SerpApiFlightSegment {
     airline_logo: string;
     flight_number: string;
     travel_class: string;
+    extensions?: string[];
+    airplane?: string;
 }
 
 export interface SerpApiFlightOption {
@@ -29,6 +31,14 @@ export interface SerpApiFlightOption {
     type: string;
     airline_logo: string;
     departure_token?: string;
+    carbon_emissions?: {
+        this_flight: number;
+        typical_for_this_route: number;
+        difference_percent: number;
+    };
+    extensions?: string[];
+    booking_token?: string;
+    link?: string;
 }
 
 export interface AutocompleteResult {
@@ -48,8 +58,30 @@ export interface SerpApiResponse {
     price_insights?: {
         lowest_price: number;
         price_level: string;
+        typical_price_range?: [number, number];
         price_history?: [number, number][];
     };
+    error?: string;
+}
+
+export interface SerpApiBookingOption {
+    separate_tickets?: boolean;
+    together?: {
+        book_with: string;
+        airline?: boolean;
+        airline_logos?: string[];
+        price: number;
+        booking_request?: {
+            url: string;
+            post_data: string;
+        };
+    };
+    departing?: any;
+    returning?: any;
+}
+
+export interface SerpApiBookingResponse {
+    booking_options?: SerpApiBookingOption[];
     error?: string;
 }
 
@@ -232,6 +264,32 @@ export const serpApiService = {
         const url = `${BASE_URL}?${queryString.stringify(queryParams)}`;
         const response = await fetch(url);
         if (!response.ok) throw new Error(`News Error: ${response.status}`);
+        return await response.json();
+    },
+
+    getBookingOptions: async (params: {
+        booking_token: string;
+        departure_id: string;
+        arrival_id: string;
+        outbound_date: string;
+        return_date?: string;
+        trip_type?: string;
+    }): Promise<SerpApiBookingResponse> => {
+        const queryParams: any = {
+            engine: 'google_flights',
+            api_key: API_KEY,
+            booking_token: params.booking_token,
+            departure_id: params.departure_id,
+            arrival_id: params.arrival_id,
+            outbound_date: params.outbound_date
+        };
+
+        if (params.trip_type) queryParams.type = params.trip_type;
+        if (params.return_date) queryParams.return_date = params.return_date;
+
+        const url = `${BASE_URL}?${queryString.stringify(queryParams)}`;
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`Booking Options Error: ${response.status}`);
         return await response.json();
     }
 };

@@ -13,12 +13,15 @@ const Loading = () => (
     </Box>
 );
 
+const FlightDetails = lazy(() => import('@/pages/Flights/FlightDetails'));
+
 export const ContentRoutes = () => {
     return (
         <Suspense fallback={<Loading />}>
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/flights" element={<Flights />} />
+                <Route path="/flights/:id" element={<FlightDetails />} />
                 <Route path="/hotels" element={<Hotels />} />
                 <Route path="/cars" element={<ComingSoon title="Cars" />} />
             </Routes>

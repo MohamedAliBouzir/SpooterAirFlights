@@ -1,5 +1,6 @@
 import { Paper, Typography, Box, Button, Chip, useTheme } from '@mui/material';
 import type { Flight } from '@/hooks/useFlightStore';
+import { useNavigate } from 'react-router-dom';
 import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
 import { flightCardStyles } from '@/styles/components/Flights/FlightCard.style';
 
@@ -9,6 +10,11 @@ interface FlightCardProps {
 
 const FlightCard = ({ flight }: FlightCardProps) => {
     const theme = useTheme();
+    const navigate = useNavigate();
+
+    const handleSelect = () => {
+        navigate(`/flights/${flight.id}`);
+    };
 
     const formatTime = (timeStr: string) => {
         try {
@@ -174,6 +180,7 @@ const FlightCard = ({ flight }: FlightCardProps) => {
                         variant="contained"
                         size="small"
                         fullWidth={false}
+                        onClick={handleSelect}
                         sx={{
                             borderRadius: '100px',
                             px: 3,

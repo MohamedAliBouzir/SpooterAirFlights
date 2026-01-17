@@ -135,21 +135,6 @@ const FlightSearchForm = () => {
         }
     };
 
-    const debouncedSearch = useCallback(
-        debounce(() => {
-            handleSearch();
-        }, 500),
-        []
-    );
-
-    useEffect(() => {
-        if (searchParams.origin && searchParams.destination) {
-            debouncedSearch();
-        }
-        return () => {
-            debouncedSearch.cancel();
-        };
-    }, [searchParams.origin, searchParams.destination, debouncedSearch]);
 
     return (
         <Paper sx={flightFormStyles.paper(theme)}>
@@ -360,7 +345,6 @@ const FlightSearchForm = () => {
                     </Box>
                 </Box>
 
-                {/* Dates */}
                 <Box sx={{
                     flex: { xs: '1 1 auto', md: 4 },
                     display: 'flex',
@@ -409,7 +393,6 @@ const FlightSearchForm = () => {
                     )}
                 </Box>
 
-                {/* Travelers */}
                 <Box sx={{ flex: { xs: '1 1 auto', md: 2 } }}>
                     <TextField
                         fullWidth

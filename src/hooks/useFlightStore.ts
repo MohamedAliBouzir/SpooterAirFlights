@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { serpApiService, type SerpApiFlightOption } from '@/services/serpApi';
+import { serpApiService, type SerpApiFlightOption, type SerpApiBookingOption } from '@/services/serpApi';
 
 export interface FlightSearchParams {
     origin: string;
@@ -34,6 +34,16 @@ export interface Flight {
     stops: number;
     rawDuration: number;
     isBestDeal?: boolean;
+    segments?: any[];
+    layovers?: any[];
+    emissions?: {
+        this_flight: number;
+        typical_for_this_route: number;
+        difference_percent: number;
+    };
+    extensions?: string[];
+    bookingLink?: string;
+    bookingToken?: string;
 }
 
 export interface PriceTrendPoint {
@@ -47,6 +57,12 @@ interface FlightState {
     filters: FlightFilterParams;
     results: Flight[];
     priceTrends: PriceTrendPoint[];
+    priceInsights: {
+        lowestPrice?: number;
+        priceLevel?: string;
+        typicalPriceRange?: [number, number];
+    } | null;
+    bookingOptions: SerpApiBookingOption[];
     loading: boolean;
     error: string | null;
 
@@ -54,6 +70,7 @@ interface FlightState {
     setFilters: (filters: Partial<FlightFilterParams>) => void;
     setPriceTrends: (trends: PriceTrendPoint[]) => void;
     searchFlights: () => Promise<void>;
+    fetchBookingOptions: (booking_token: string) => Promise<void>;
     swapLocations: () => void;
 }
 
@@ -80,6 +97,8 @@ export const useFlightStore = create<FlightState>((set, get) => ({
     },
     results: [],
     priceTrends: [],
+    priceInsights: null,
+    bookingOptions: [],
     loading: false,
     error: null,
 
@@ -136,7 +155,13 @@ export const useFlightStore = create<FlightState>((set, get) => ({
                     duration: formatSerpApiDuration(f.total_duration),
                     stops: f.layovers ? f.layovers.length : 0,
                     rawDuration: f.total_duration,
-                    isBestDeal: f.price < 200
+                    isBestDeal: f.price < 200,
+                    segments: f.flights,
+                    layovers: f.layovers,
+                    emissions: f.carbon_emissions,
+                    extensions: f.extensions,
+                    bookingLink: f.link || `https://www.google.com/travel/flights?q=Flights%20to%20${lastSegment.arrival_airport.id}%20from%20${firstSegment.departure_airport.id}%20on%20${firstSegment.departure_airport.time.split('T')[0]}`,
+                    bookingToken: f.booking_token
                 };
             });
 
@@ -158,6 +183,11 @@ export const useFlightStore = create<FlightState>((set, get) => ({
             set({
                 results: mappedFlights,
                 priceTrends: trends,
+                priceInsights: response.price_insights ? {
+                    lowestPrice: response.price_insights.lowest_price,
+                    priceLevel: response.price_insights.price_level,
+                    typicalPriceRange: response.price_insights.typical_price_range,
+                } : null,
                 loading: false
             });
 
@@ -170,4 +200,30 @@ export const useFlightStore = create<FlightState>((set, get) => ({
             });
         }
     },
+
+    fetchBookingOptions: async (booking_token: string) => {
+        const { searchParams } = get();
+        set({ loading: true, error: null });
+        try {
+            const response = await serpApiService.getBookingOptions({
+                booking_token,
+                departure_id: searchParams.origin,
+                arrival_id: searchParams.destination,
+                outbound_date: searchParams.departureDate || new Date().toISOString().split('T')[0],
+                return_date: searchParams.tripType === 'round-trip' ? searchParams.returnDate || undefined : undefined,
+                trip_type: searchParams.tripType === 'round-trip' ? '1' : '2'
+            });
+            if (response.error) throw new Error(response.error);
+            set({
+                bookingOptions: response.booking_options || [],
+                loading: false
+            });
+        } catch (err: any) {
+            console.error(err);
+            set({
+                error: err.message || 'Failed to fetch booking options.',
+                loading: false
+            });
+        }
+    }
 }));
