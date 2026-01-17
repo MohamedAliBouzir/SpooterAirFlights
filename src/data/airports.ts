@@ -5,10 +5,6 @@ export interface Airport {
     country: string;
 }
 
-/**
- * Comprehensive list of major international airports
- * This is a static database that's always available for autocomplete
- */
 export const AIRPORTS: Airport[] = [
     // United States
     { id: "ATL", name: "Hartsfield-Jackson Atlanta International Airport", city: "Atlanta", country: "United States" },
@@ -273,9 +269,6 @@ export const AIRPORTS: Airport[] = [
     { id: "LOS", name: "Murtala Muhammed International Airport", city: "Lagos", country: "Nigeria" },
 ];
 
-/**
- * Search airports by name, code, city, or country
- */
 export const searchAirports = (query: string, limit: number = 10): Airport[] => {
     if (!query || query.length < 2) return AIRPORTS.slice(0, limit);
 
@@ -293,9 +286,6 @@ export const searchAirports = (query: string, limit: number = 10): Airport[] => 
     return results.slice(0, limit);
 };
 
-/**
- * Get airport by IATA code
- */
 export const getAirportByCode = (code: string): Airport | undefined => {
     return AIRPORTS.find(airport => airport.id === code);
 };

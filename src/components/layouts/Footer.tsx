@@ -3,7 +3,7 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
-import { footerStyles } from '@/styles/components/UI/Footer.style';
+import { footerStyles } from '@/styles/components/layouts/Footer.style';
 
 const Footer = ({ detail = false }: { detail?: boolean }) => {
     const theme = useTheme();

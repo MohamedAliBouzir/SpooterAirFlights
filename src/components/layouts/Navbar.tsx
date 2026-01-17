@@ -7,7 +7,7 @@ import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 import FlightIcon from '@mui/icons-material/Flight';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useAppStore } from '@/hooks/useAppStore';
-import { navbarStyles } from '@/styles/components/UI/Navbar.style';
+import { navbarStyles } from '@/styles/components/layouts/Navbar.style';
 import { useState, useEffect } from 'react';
 
 const Navbar = () => {

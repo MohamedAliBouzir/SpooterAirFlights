@@ -144,33 +144,15 @@ const FlightSearchForm = () => {
                     onChange={handleTabChange}
                     textColor="primary"
                     indicatorColor="primary"
-                    sx={{
-                        '& .MuiTab-root': {
-                            color: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.6)',
-                            '&.Mui-selected': {
-                                color: theme.palette.mode === 'dark' ? '#fff' : theme.palette.primary.main,
-                            }
-                        }
-                    }}
+                    sx={flightFormStyles.tabsContainer(theme)}
                 >
-                    <Tab label="Round-trip" sx={{ textTransform: 'none', fontWeight: 600 }} />
-                    <Tab label="One-way" sx={{ textTransform: 'none', fontWeight: 600 }} />
+                    <Tab label="Round-trip" sx={flightFormStyles.tabItem} />
+                    <Tab label="One-way" sx={flightFormStyles.tabItem} />
                 </Tabs>
             </Box>
 
-            <Box sx={{
-                display: 'flex',
-                flexDirection: { xs: 'column', md: 'row' },
-                gap: 2,
-                ...flightFormStyles.gridContainer
-            }}>
-                <Box sx={{
-                    flex: { xs: '1 1 auto', md: 5 },
-                    display: 'grid',
-                    gridTemplateColumns: { xs: '1fr auto', md: '1fr auto 1fr' },
-                    gap: { xs: 2, md: 1 },
-                    alignItems: 'center'
-                }}>
+            <Box sx={flightFormStyles.formContainer}>
+                <Box sx={flightFormStyles.locationGrid}>
                     <Autocomplete
                         fullWidth
                         options={originOptions}
@@ -220,25 +202,20 @@ const FlightSearchForm = () => {
                             const { key, ...optionProps } = props as any;
                             const isAirport = option.type === 'airport';
                             return (
-                                <Box component="li" key={option.id} {...optionProps} sx={{
-                                    py: 1,
-                                    pl: isAirport ? 4 : 2,
-                                    borderBottom: '1px solid',
-                                    borderColor: 'divider'
-                                }}>
-                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, width: '100%' }}>
+                                <Box component="li" key={option.id} {...optionProps} sx={flightFormStyles.autocompleteOption(isAirport)}>
+                                    <Box sx={flightFormStyles.optionContent}>
                                         {isAirport ? (
-                                            <FlightIcon fontSize="small" color="secondary" sx={{ opacity: 0.7 }} />
+                                            <FlightIcon fontSize="small" color="secondary" sx={flightFormStyles.optionIcon} />
                                         ) : (
                                             <LocationOnIcon fontSize="small" color="primary" />
                                         )}
-                                        <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1, overflow: 'hidden' }}>
-                                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-                                                <Typography variant="body2" noWrap sx={{ fontWeight: isAirport ? 400 : 700 }}>
+                                        <Box sx={flightFormStyles.optionTextWrapper}>
+                                            <Box sx={flightFormStyles.optionTitleRow}>
+                                                <Typography variant="body2" noWrap sx={flightFormStyles.optionTitle(isAirport)}>
                                                     {option.title}
                                                 </Typography>
                                                 {isAirport && (
-                                                    <Typography variant="caption" sx={{ fontWeight: 'bold', ml: 1, color: 'text.secondary' }}>
+                                                    <Typography variant="caption" sx={flightFormStyles.optionCode}>
                                                         {option.id}
                                                     </Typography>
                                                 )}
@@ -255,12 +232,12 @@ const FlightSearchForm = () => {
 
                     <IconButton
                         onClick={swapLocations}
-                        sx={{ bgcolor: 'action.hover' }}
+                        sx={flightFormStyles.swapButton}
                     >
                         <SyncAltIcon />
                     </IconButton>
 
-                    <Box sx={{ gridColumn: { xs: '1 / -1', md: 'auto' } }}>
+                    <Box sx={flightFormStyles.destinationWrapper}>
                         <Autocomplete
                             fullWidth
                             options={destOptions}
@@ -310,25 +287,20 @@ const FlightSearchForm = () => {
                                 const { key, ...optionProps } = props as any;
                                 const isAirport = option.type === 'airport';
                                 return (
-                                    <Box component="li" key={option.id} {...optionProps} sx={{
-                                        py: 1,
-                                        pl: isAirport ? 4 : 2,
-                                        borderBottom: '1px solid',
-                                        borderColor: 'divider'
-                                    }}>
-                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, width: '100%' }}>
+                                    <Box component="li" key={option.id} {...optionProps} sx={flightFormStyles.autocompleteOption(isAirport)}>
+                                        <Box sx={flightFormStyles.optionContent}>
                                             {isAirport ? (
-                                                <FlightIcon fontSize="small" color="secondary" sx={{ opacity: 0.7 }} />
+                                                <FlightIcon fontSize="small" color="secondary" sx={flightFormStyles.optionIcon} />
                                             ) : (
                                                 <LocationOnIcon fontSize="small" color="primary" />
                                             )}
-                                            <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1, overflow: 'hidden' }}>
-                                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-                                                    <Typography variant="body2" noWrap sx={{ fontWeight: isAirport ? 400 : 700 }}>
+                                            <Box sx={flightFormStyles.optionTextWrapper}>
+                                                <Box sx={flightFormStyles.optionTitleRow}>
+                                                    <Typography variant="body2" noWrap sx={flightFormStyles.optionTitle(isAirport)}>
                                                         {option.title}
                                                     </Typography>
                                                     {isAirport && (
-                                                        <Typography variant="caption" sx={{ fontWeight: 'bold', ml: 1, color: 'text.secondary' }}>
+                                                        <Typography variant="caption" sx={flightFormStyles.optionCode}>
                                                             {option.id}
                                                         </Typography>
                                                     )}
@@ -345,12 +317,7 @@ const FlightSearchForm = () => {
                     </Box>
                 </Box>
 
-                <Box sx={{
-                    flex: { xs: '1 1 auto', md: 4 },
-                    display: 'flex',
-                    flexDirection: { xs: 'column', md: 'row' },
-                    gap: 1
-                }}>
+                <Box sx={flightFormStyles.dateGrid}>
                     <TextField
                         fullWidth
                         label="Departure"
@@ -393,7 +360,7 @@ const FlightSearchForm = () => {
                     )}
                 </Box>
 
-                <Box sx={{ flex: { xs: '1 1 auto', md: 2 } }}>
+                <Box sx={flightFormStyles.passengersWrapper}>
                     <TextField
                         fullWidth
                         label="Travelers"
@@ -411,15 +378,14 @@ const FlightSearchForm = () => {
                     />
                 </Box>
 
-                {/* Search Button */}
-                <Box sx={{ flex: { xs: '1 1 auto', md: 1 } }}>
+                <Box sx={flightFormStyles.searchButtonWrapper}>
                     <Button
                         fullWidth
                         variant="contained"
                         color="secondary"
                         onClick={handleSearch}
                         disabled={searchLoading}
-                        sx={{ ...flightFormStyles.searchButton, height: '100%', minHeight: 56 }}
+                        sx={flightFormStyles.searchButton}
                     >
                         {searchLoading ? <CircularProgress size={24} color="inherit" /> : <SearchIcon />}
                     </Button>

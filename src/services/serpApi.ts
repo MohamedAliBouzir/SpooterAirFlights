@@ -176,7 +176,6 @@ export const serpApiService = {
 
         const results: AutocompleteResult[] = [];
         (data.suggestions || []).forEach((s: any, index: number) => {
-            // Add city/region
             const mainId = s.id || `suggest-${index}`;
             results.push({
                 id: mainId,
@@ -185,11 +184,10 @@ export const serpApiService = {
                 type: s.type || ''
             });
 
-            // Add nested airports if any
             if (s.type === 'city' && s.airports && s.airports.length > 0) {
                 s.airports.forEach((a: any) => {
                     results.push({
-                        id: a.id, // IATA code
+                        id: a.id,
                         title: a.name,
                         subtitle: `${a.distance ? a.distance + ' to city center' : a.city}`,
                         type: 'airport'

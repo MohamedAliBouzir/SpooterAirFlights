@@ -697,7 +697,7 @@ const FlightDetails = () => {
                                 </ResponsiveContainer>
                             </Box>
                             <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 3, textAlign: 'center', fontSize: '0.75rem', opacity: 0.8 }}>
-                                Historical pricing for the last 60 days
+                                Historical pricing
                             </Typography>
                         </Paper>
                     </Grid>

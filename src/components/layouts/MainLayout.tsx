@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import Navbar from '@/components/UI/Navbar';
+import Navbar from '@/components/layouts/Navbar';
 import { FooterRoutes } from '@/routes/footerRoutes';
 import type { ReactNode } from 'react';
 import { mainLayoutStyles } from '@/styles/layout/MainLayout.style';

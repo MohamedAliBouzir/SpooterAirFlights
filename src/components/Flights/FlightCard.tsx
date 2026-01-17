@@ -26,32 +26,10 @@ const FlightCard = ({ flight }: FlightCardProps) => {
 
     return (
         <Paper sx={flightCardStyles.root(theme)}>
-            <Box sx={{
-                display: 'flex',
-                flexDirection: { xs: 'column', md: 'row' },
-                alignItems: { xs: 'stretch', md: 'center' },
-                gap: { xs: 2.5, md: 3 },
-                width: '100%'
-            }}>
-                <Box sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: { xs: 'space-between', md: 'flex-start' },
-                    gap: 1.5,
-                    minWidth: 140
-                }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                        <Box sx={{
-                            ...flightCardStyles.logo,
-                            background: 'transparent',
-                            border: 'none',
-                            width: 40,
-                            height: 40,
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            overflow: 'hidden'
-                        }}>
+            <Box sx={flightCardStyles.container}>
+                <Box sx={flightCardStyles.airlineSection}>
+                    <Box sx={flightCardStyles.airlineInfo}>
+                        <Box sx={flightCardStyles.logoWrapper}>
                             {flight.airlineLogo ? (
                                 <img
                                     src={flight.airlineLogo}
@@ -64,114 +42,67 @@ const FlightCard = ({ flight }: FlightCardProps) => {
                             )}
                         </Box>
                         <Box>
-                            <Typography variant="body2" fontWeight="600" sx={{ lineHeight: 1.2 }}>
+                            <Typography variant="body2" fontWeight="600" sx={flightCardStyles.airlineText}>
                                 {flight.airline}
                             </Typography>
-                            <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.7rem' }}>
+                            <Typography variant="caption" color="text.secondary" sx={flightCardStyles.flightNumber}>
                                 {flight.flightNumber}
                             </Typography>
                         </Box>
                     </Box>
 
-                    <Box sx={{ display: { xs: 'block', md: 'none' }, textAlign: 'right' }}>
-                        <Typography
-                            variant="h6"
-                            fontWeight="900"
-                            sx={{
-                                color: theme.palette.mode === 'dark' ? '#00d2ff' : 'primary.main',
-                                lineHeight: 1
-                            }}
-                        >
+                    <Box sx={flightCardStyles.mobilePriceSection}>
+                        <Typography variant="h6" fontWeight="900" sx={flightCardStyles.mobilePrice(theme)}>
                             ${flight.price}
                         </Typography>
                     </Box>
                 </Box>
 
-                <Box sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    flex: 1,
-                    gap: 1
-                }}>
-                    <Box sx={{ minWidth: 80, textAlign: { xs: 'left', md: 'center' } }}>
-                        <Typography variant="h6" fontWeight="700" sx={{ fontSize: '1.1rem', lineHeight: 1.2 }}>
+                <Box sx={flightCardStyles.flightDetails}>
+                    <Box sx={flightCardStyles.timeSection}>
+                        <Typography variant="h6" fontWeight="700" sx={flightCardStyles.time}>
                             {formatTime(flight.departure.at)}
                         </Typography>
-                        <Typography variant="caption" color="text.secondary" fontWeight="600" sx={{ fontSize: '0.75rem' }}>
+                        <Typography variant="caption" color="text.secondary" fontWeight="600" sx={flightCardStyles.airportCode}>
                             {flight.departure.code}
                         </Typography>
                     </Box>
 
-                    <Box sx={{ flex: 1, px: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5, width: '100%', justifyContent: 'center' }}>
-                            <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.7rem' }}>
+                    <Box sx={flightCardStyles.durationSection}>
+                        <Box sx={flightCardStyles.durationRow}>
+                            <Typography variant="caption" color="text.secondary" sx={flightCardStyles.durationText}>
                                 {flight.duration}
                             </Typography>
-                            <Box sx={{ flex: 1, height: 2, bgcolor: 'divider', position: 'relative', maxWidth: 100 }}>
-                                <FlightTakeoffIcon sx={{
-                                    fontSize: 12,
-                                    position: 'absolute',
-                                    left: '50%',
-                                    top: '50%',
-                                    transform: 'translate(-50%, -50%) rotate(90deg)',
-                                    color: 'primary.main'
-                                }} />
+                            <Box sx={flightCardStyles.flightLine}>
+                                <FlightTakeoffIcon sx={flightCardStyles.flightIcon} />
                             </Box>
                         </Box>
                         <Chip
                             label={flight.stops === 0 ? 'Direct' : `${flight.stops} stop(s)`}
                             size="small"
-                            sx={{
-                                height: 18,
-                                fontSize: '0.65rem',
-                                fontWeight: 600,
-                                bgcolor: flight.stops === 0 ? 'success.light' : 'warning.light',
-                                color: flight.stops === 0 ? 'success.dark' : 'warning.dark',
-                                '& .MuiChip-label': { px: 1 }
-                            }}
+                            sx={flightCardStyles.stopsChip(flight.stops)}
                         />
                     </Box>
 
-                    <Box sx={{ minWidth: 80, textAlign: { xs: 'right', md: 'center' } }}>
-                        <Typography variant="h6" fontWeight="700" sx={{ fontSize: '1.1rem', lineHeight: 1.2 }}>
+                    <Box sx={flightCardStyles.timeSection}>
+                        <Typography variant="h6" fontWeight="700" sx={flightCardStyles.time}>
                             {formatTime(flight.arrival.at)}
                         </Typography>
-                        <Typography variant="caption" color="text.secondary" fontWeight="600" sx={{ fontSize: '0.75rem' }}>
+                        <Typography variant="caption" color="text.secondary" fontWeight="600" sx={flightCardStyles.airportCode}>
                             {flight.arrival.code}
                         </Typography>
                     </Box>
                 </Box>
 
-                <Box sx={{
-                    minWidth: { md: 200 },
-                    textAlign: 'right',
-                    display: 'flex',
-                    flexDirection: { xs: 'row', md: 'column' },
-                    alignItems: { xs: 'center', md: 'flex-end' },
-                    justifyContent: { xs: 'space-between', md: 'center' },
-                    gap: { xs: 2, md: 0.5 },
-                    pl: { md: 3 },
-                    borderLeft: { md: `1px solid ${theme.palette.divider}` },
-                    pt: { xs: 2, md: 0 },
-                    borderTop: { xs: `1px solid ${theme.palette.divider}`, md: 'none' }
-                }}>
-                    <Box sx={{ display: { xs: 'none', md: 'flex' }, flexDirection: 'column', alignItems: 'flex-end' }}>
+                <Box sx={flightCardStyles.priceSection(theme)}>
+                    <Box sx={flightCardStyles.desktopPriceSection}>
                         {flight.isBestDeal && (
                             <Box sx={flightCardStyles.tag}>Best Deal</Box>
                         )}
-                        <Typography
-                            variant="h5"
-                            fontWeight="900"
-                            sx={{
-                                color: theme.palette.mode === 'dark' ? '#00d2ff' : 'primary.main',
-                                lineHeight: 1,
-                                mb: 0.5
-                            }}
-                        >
+                        <Typography variant="h5" fontWeight="900" sx={flightCardStyles.price(theme)}>
                             ${flight.price}
                         </Typography>
-                        <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.65rem', mb: 1 }}>
+                        <Typography variant="caption" color="text.secondary" sx={flightCardStyles.priceLabel}>
                             Total price
                         </Typography>
                     </Box>
@@ -181,19 +112,7 @@ const FlightCard = ({ flight }: FlightCardProps) => {
                         size="small"
                         fullWidth={false}
                         onClick={handleSelect}
-                        sx={{
-                            borderRadius: '100px',
-                            px: 3,
-                            py: 0.75,
-                            fontWeight: 700,
-                            fontSize: '0.8rem',
-                            textTransform: 'none',
-                            width: { xs: '100%', md: 'auto' },
-                            bgcolor: theme.palette.mode === 'dark' ? 'primary.main' : 'primary.dark',
-                            '&:hover': {
-                                bgcolor: theme.palette.mode === 'dark' ? 'primary.dark' : 'primary.main',
-                            }
-                        }}
+                        sx={flightCardStyles.selectButton(theme)}
                     >
                         Select
                     </Button>

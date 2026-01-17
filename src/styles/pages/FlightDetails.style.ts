@@ -6,6 +6,451 @@ export const flightDetailsStyles = {
         bgcolor: 'background.default',
         pb: 8,
     },
+
+    notFoundContainer: {
+        py: 8,
+        textAlign: 'center'
+    },
+
+    notFoundText: {
+        mt: 1,
+        mb: 3
+    },
+
+    notFoundButton: {
+        borderRadius: '100px',
+        px: 4
+    },
+
+    container: {
+        py: 4
+    },
+
+    backButton: {
+        mb: 4,
+        textTransform: 'none',
+        fontWeight: 600,
+        color: 'text.secondary'
+    },
+
+    itineraryHeader: {
+        mb: 4
+    },
+
+    segmentContainer: {
+        mb: 6,
+        position: 'relative'
+    },
+
+    airlineInfoRow: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: 2,
+        mb: 4
+    },
+
+    airlineDetailsRow: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: 1,
+        flexWrap: 'wrap'
+    },
+
+    airlineText: {
+        fontWeight: 700,
+        fontSize: '0.9rem'
+    },
+
+    airlineMetadata: {
+        color: 'text.secondary',
+        fontSize: '0.85rem'
+    },
+
+    timelineWrapper: {
+        position: 'relative',
+        pl: 0.5
+    },
+
+    verticalLine: (theme: Theme) => ({
+        position: 'absolute',
+        left: 10,
+        top: 10,
+        bottom: 10,
+        width: 0,
+        borderLeft: `2px dotted ${theme.palette.divider}`,
+        zIndex: 1
+    }),
+
+    departureRow: {
+        display: 'flex',
+        gap: 3,
+        mb: 3,
+        position: 'relative',
+        zIndex: 2
+    },
+
+    dotWrapper: (theme: Theme) => ({
+        ...flightDetailsStyles.timelineDot(theme),
+        flexShrink: 0,
+        mt: '6px'
+    }),
+
+    locationRow: {
+        flex: 1,
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start'
+    },
+
+    locationText: {
+        lineHeight: 1.3,
+        fontSize: '1.05rem',
+        maxWidth: { xs: '100%', sm: 400 }
+    },
+
+    timeText: {
+        mt: 0.5
+    },
+
+    extensionsBox: {
+        textAlign: 'right',
+        display: { xs: 'none', sm: 'block' },
+        minWidth: 200
+    },
+
+    extensionText: {
+        fontSize: '0.75rem'
+    },
+
+    travelTimeRow: {
+        display: 'flex',
+        gap: 3,
+        mb: 3,
+        pl: 5.5
+    },
+
+    travelTimeLabel: {
+        fontSize: '0.9rem'
+    },
+
+    arrivalRow: {
+        display: 'flex',
+        gap: 3,
+        position: 'relative',
+        zIndex: 2
+    },
+
+    arrivalContent: {
+        flex: 1
+    },
+
+    divider: {
+        my: 6
+    },
+
+    carbonHeader: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: 2,
+        mb: 2
+    },
+
+    carbonValue: {
+        mt: 1
+    },
+
+    bookingHeader: {
+        p: 3,
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+
+    bookingProviderInfo: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: 2
+    },
+
+    airlineChip: {
+        height: 20,
+        fontSize: '0.65rem',
+        fontWeight: 800,
+        bgcolor: 'rgba(0,0,0,0.05)'
+    },
+
+    hideOptionsButton: {
+        textTransform: 'none',
+        fontWeight: 700,
+        borderRadius: '100px'
+    },
+
+    farePrice: {
+        textAlign: 'right'
+    },
+
+    farePriceText: {
+        lineHeight: 1
+    },
+
+    continueButtonPrimary: {
+        bgcolor: '#1a73e8',
+        color: 'white',
+        border: 'none',
+        '&:hover': {
+            bgcolor: '#1765cc'
+        }
+    },
+
+    continueButtonSecondary: {
+        bgcolor: 'transparent',
+        color: '#1a73e8',
+        border: '1px solid #dadce0',
+        '&:hover': {
+            bgcolor: '#f8f9fa'
+        }
+    },
+
+    fareDisclaimer: (theme: Theme) => ({
+        p: 2,
+        px: 3,
+        borderBottom: `1px solid ${theme.palette.divider}`
+    }),
+
+    disclaimerText: {
+        fontSize: '0.7rem'
+    },
+
+    bookingOptionsContainer: {
+        display: 'flex',
+        alignItems: 'center'
+    },
+
+    loadingContainer: (theme: Theme) => ({
+        ...flightDetailsStyles.bookingCard(theme),
+        p: 8,
+        textAlign: 'center'
+    }),
+
+    loadingSpinner: {
+        mb: 2
+    },
+
+    noBookingContainer: (theme: Theme) => ({
+        ...flightDetailsStyles.bookingCard(theme),
+        p: 8,
+        textAlign: 'center'
+    }),
+
+    tryGoogleButton: {
+        mt: 2,
+        textTransform: 'none',
+        fontWeight: 700
+    },
+
+    priceInsightColors: (theme: Theme, priceLevel: string) => {
+        const isDark = theme.palette.mode === 'dark';
+        const colors = {
+            low: isDark ? '#81c995' : '#34a853',
+            typical: isDark ? '#fdd663' : '#fbbc04',
+            high: isDark ? '#f28b82' : '#ea4335',
+            lowBg: isDark ? 'rgba(129, 201, 149, 0.15)' : '#e6f4ea',
+            typicalBg: isDark ? 'rgba(253, 214, 99, 0.15)' : '#fef7e0',
+            highBg: isDark ? 'rgba(242, 139, 130, 0.15)' : '#fce8e6',
+            lowText: isDark ? '#81c995' : '#137333',
+            typicalText: isDark ? '#fdd663' : '#b06000',
+            highText: isDark ? '#f28b82' : '#c5221f',
+        };
+        return colors;
+    },
+
+    priceInsightContent: {
+        p: 0
+    },
+
+    priceInsightTitle: (theme: Theme) => ({
+        fontSize: '1.2rem',
+        color: theme.palette.text.primary
+    }),
+
+    priceLevelText: (priceLevel: string, colors: any) => ({
+        color: priceLevel === 'high' ? colors.high : priceLevel === 'low' ? colors.low : colors.typical,
+        fontWeight: 800
+    }),
+
+    priceRangeText: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: 0.5,
+        mb: 1,
+        fontSize: '0.85rem'
+    },
+
+    infoIcon: {
+        fontSize: 16,
+        ml: 0.5,
+        opacity: 0.7
+    },
+
+    priceMarkerDot: (priceLevel: string, colors: any, isDark: boolean) => ({
+        bgcolor: priceLevel === 'low' ? colors.low : priceLevel === 'high' ? colors.high : colors.typical,
+        boxShadow: isDark ? `0 0 10px ${priceLevel === 'low' ? colors.low : priceLevel === 'high' ? colors.high : colors.typical}` : 'none'
+    }),
+
+    priceMarkerLabel: (priceLevel: string, colors: any, isDark: boolean) => ({
+        bgcolor: priceLevel === 'low' ? colors.lowBg : priceLevel === 'high' ? colors.highBg : colors.typicalBg,
+        color: priceLevel === 'low' ? colors.lowText : priceLevel === 'high' ? colors.highText : colors.typicalText,
+        border: isDark ? `1px solid ${priceLevel === 'low' ? 'rgba(129, 201, 149, 0.3)' : priceLevel === 'high' ? 'rgba(242, 139, 130, 0.3)' : 'rgba(253, 214, 99, 0.3)'}` : 'none',
+        '&:after': {
+            borderTopColor: isDark ? (priceLevel === 'low' ? 'rgba(129, 201, 149, 0.3)' : priceLevel === 'high' ? 'rgba(242, 139, 130, 0.3)' : 'rgba(253, 214, 99, 0.15)') : (priceLevel === 'low' ? '#e6f4ea' : priceLevel === 'high' ? '#fce8e6' : '#fef7e0'),
+        }
+    }),
+
+    priceLabelRow: {
+        display: 'flex',
+        mt: -3,
+        mb: 4,
+        px: 0,
+        position: 'relative',
+        height: 20
+    },
+
+    priceLabelLow: (lowPos: number) => ({
+        position: 'absolute',
+        left: `${lowPos}%`,
+        transform: 'translateX(-50%)',
+        fontSize: '0.65rem'
+    }),
+
+    priceLabelHigh: (highPos: number) => ({
+        position: 'absolute',
+        left: `${highPos}%`,
+        transform: 'translateX(-50%)',
+        fontSize: '0.65rem'
+    }),
+
+    statsContainer: (theme: Theme) => ({
+        bgcolor: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)',
+        p: 2,
+        borderRadius: 3,
+        mb: 3
+    }),
+
+    statsTitle: {
+        fontSize: '0.8rem',
+        color: 'primary.main',
+        textTransform: 'uppercase'
+    },
+
+    chartHistoryText: {
+        display: 'block',
+        mt: 3,
+        textAlign: 'center',
+        fontSize: '0.75rem',
+        opacity: 0.8
+    },
+
+    mapHeader: (theme: Theme) => ({
+        p: 3,
+        borderBottom: `1px solid ${theme.palette.divider}`
+    }),
+
+    mapRouteInfo: {
+        p: 3
+    },
+
+    mapRouteHeader: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        mb: 1
+    },
+
+    mapRouteRow: {
+        display: 'flex',
+        justifyContent: 'space-between'
+    },
+
+    mapRouteLine: {
+        height: 2,
+        bgcolor: 'divider',
+        flex: 1,
+        mx: 2,
+        alignSelf: 'center',
+        position: 'relative'
+    },
+
+    mapRouteDot: {
+        position: 'absolute',
+        right: 0,
+        top: -4,
+        width: 8,
+        height: 8,
+        bgcolor: 'primary.main',
+        borderRadius: '50%'
+    },
+
+    markerContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+    },
+
+    markerIcon: {
+        color: 'primary.main',
+        fontSize: 24,
+        mb: -0.5,
+        transform: 'rotate(-45deg)'
+    },
+
+    markerIconLanding: {
+        color: 'secondary.main',
+        fontSize: 24,
+        mb: -0.5,
+        transform: 'rotate(45deg)'
+    },
+
+    markerTimeBox: {
+        bgcolor: 'primary.main',
+        px: 1,
+        borderRadius: 1,
+        my: 0.5
+    },
+
+    markerTimeBoxLanding: {
+        bgcolor: 'secondary.main',
+        px: 1,
+        borderRadius: 1,
+        my: 0.5
+    },
+
+    markerTimeText: {
+        color: 'white',
+        fontSize: '0.7rem',
+        fontWeight: 900
+    },
+
+    markerDot: {
+        width: 12,
+        height: 12,
+        bgcolor: 'primary.main',
+        borderRadius: '50%',
+        border: '2px solid white'
+    },
+
+    markerDotLanding: {
+        width: 12,
+        height: 12,
+        bgcolor: 'secondary.main',
+        borderRadius: '50%',
+        border: '2px solid white'
+    },
+
+    stickyContainer: {
+        position: 'sticky',
+        top: 90,
+        zIndex: 10
+    },
+
     infoCard: (theme: Theme) => ({
         p: { xs: 2, md: 4 },
         borderRadius: { xs: 3, md: 5 },
@@ -29,7 +474,6 @@ export const flightDetailsStyles = {
         boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
         overflow: 'hidden',
     },
-    // Google Flights Itinerary Design
     timelineContainer: {
         display: 'flex',
         flexDirection: 'column',
@@ -90,11 +534,6 @@ export const flightDetailsStyles = {
         fontWeight: 500,
         lineHeight: 1.4,
     },
-    travelTimeRow: {
-        display: 'flex',
-        alignItems: 'center',
-        py: 1,
-    },
     travelTimeText: {
         fontSize: '0.85rem',
         color: 'text.secondary',
@@ -125,7 +564,6 @@ export const flightDetailsStyles = {
         fontWeight: 600,
         color: 'text.primary',
     },
-    // Map and Pricing Styles
     mapCard: (theme: Theme) => ({
         borderRadius: { xs: 3, md: 5 },
         overflow: 'hidden',
@@ -183,7 +621,7 @@ export const flightDetailsStyles = {
         width: 12,
         height: 12,
         borderRadius: '50%',
-        bgcolor: '#4285f4', // Google Blue
+        bgcolor: '#4285f4',
         border: '2px solid #fff',
         boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
     },
