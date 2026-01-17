@@ -2,7 +2,7 @@ import type { FC, ReactNode } from "react";
 import Content from "./Content";
 import Header from "./Header/Header";
 import Footer from "./Footer/Footer";
-import { Box, Toolbar } from "@mui/material";
+import { Box } from "@mui/material";
 import PageLayout from "./PageLayout";
 import { LayoutStyle } from "../styles/layout/Wrapper.style";
 
@@ -19,7 +19,6 @@ export const WrapperContainer: FC<IWrapperProps> = ({ children }) => {
     return (
         <Box className="root" sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
             <Header />
-            <Toolbar />
             <Box
                 component="main"
                 sx={LayoutStyle.wrapperLayout}
