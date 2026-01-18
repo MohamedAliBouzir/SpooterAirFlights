@@ -77,10 +77,10 @@ export const flightCardStyles = {
         textAlign: 'right'
     },
 
-    mobilePrice: (theme: Theme) => ({
-        color: theme.palette.mode === 'dark' ? '#00d2ff' : 'primary.main',
+    mobilePrice: {
+        color: 'primary.main',
         lineHeight: 1
-    }),
+    },
 
     flightDetails: {
         display: 'flex',
@@ -171,11 +171,11 @@ export const flightCardStyles = {
         alignItems: 'flex-end'
     },
 
-    price: (theme: Theme) => ({
-        color: theme.palette.mode === 'dark' ? '#00d2ff' : 'primary.main',
+    price: {
+        color: 'primary.main',
         lineHeight: 1,
         mb: 0.5
-    }),
+    },
 
     priceLabel: {
         fontSize: '0.65rem',
@@ -192,7 +192,7 @@ export const flightCardStyles = {
         width: { xs: '100%', md: 'auto' },
         bgcolor: theme.palette.mode === 'dark' ? 'primary.main' : 'primary.dark',
         '&:hover': {
-            bgcolor: theme.palette.mode === 'dark' ? 'primary.dark' : 'primary.main',
+            bgcolor: theme.palette.mode === 'dark' ? '#e0e0e0' : 'primary.main',
         }
     }),
 

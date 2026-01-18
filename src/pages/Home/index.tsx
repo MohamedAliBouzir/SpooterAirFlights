@@ -68,7 +68,7 @@ const Home = () => {
     ];
 
     const travelProCards = [
-        { title: "SPOOTER.ai", subtitle: "BETA", description: "Get travel questions answered", image: aiAssistantImg },
+        { title: "SPOTTER.ai", subtitle: "BETA", description: "Get travel questions answered", image: aiAssistantImg },
         { title: "Explore", description: "See destinations on your budget", image: exploreImg },
         { title: "Trips", description: "Keep all your plans in one place", image: tripsImg },
         { title: "Price Alerts", description: "Know when prices change", image: priceAlertsImg },
@@ -102,7 +102,7 @@ const Home = () => {
                         transition={{ duration: 0.8 }}
                     >
                         <Typography variant="h1" sx={homeStyles.heroTitle(theme)}>
-                            Explore the World <br /> with Spooter Air
+                            Explore the World <br /> with Spotter Air
                         </Typography>
                         <Typography variant="h5" sx={homeStyles.heroSubtitle(theme)}>
                             Discover the fastest routes and lowest fares with our next-generation flight search engine.

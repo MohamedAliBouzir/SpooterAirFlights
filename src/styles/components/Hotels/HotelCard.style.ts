@@ -48,7 +48,7 @@ export const hotelCardStyles = {
         alignItems: 'center',
         gap: 0.5,
         bgcolor: 'primary.main',
-        color: 'white',
+        color: 'primary.contrastText',
         px: 1,
         py: 0.5,
         borderRadius: 1,

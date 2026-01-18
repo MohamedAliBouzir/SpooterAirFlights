@@ -82,7 +82,7 @@ const Header = () => {
             <Box sx={{ my: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
                 <FlightIcon sx={{ color: 'secondary.main' }} />
                 <Typography variant="h6" sx={navbarStyles.logoText}>
-                    SPOOTER
+                    SPOTTER
                 </Typography>
             </Box>
             <List>
@@ -122,7 +122,7 @@ const Header = () => {
                     <Box component={Link} to="/" sx={navbarStyles.logoBox}>
                         <FlightIcon sx={{ color: 'secondary.main', fontSize: '2rem' }} />
                         <Typography sx={navbarStyles.logoText}>
-                            SPOOTER
+                            SPOTTER
                         </Typography>
                     </Box>
 

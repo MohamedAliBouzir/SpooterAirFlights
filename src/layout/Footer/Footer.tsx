@@ -28,7 +28,7 @@ const Footer = ({ detail = false }: { detail?: boolean }) => {
         return (
             <Box sx={footerStyles.root(theme, false)}>
                 <Typography variant="caption" color="text.secondary">
-                    © {new Date().getFullYear()} Spooter Air. All rights reserved.
+                    © {new Date().getFullYear()} Spotter Air. All rights reserved.
                 </Typography>
             </Box>
         );
@@ -41,8 +41,11 @@ const Footer = ({ detail = false }: { detail?: boolean }) => {
         { Icon: YouTubeIcon, label: 'YouTube' },
         { Icon: InstagramIcon, label: 'Instagram' }
     ];
-    const partnerLinks = ['SPOOTER', 'Booking.com', 'OpenTable', 'priceline', 'agoda'];
-    const settingLinks = ['English', '$ USD'];
+    const appRoutes = [
+        { label: 'Flights', path: '/flights' },
+        { label: 'Hotels', path: '/hotels' },
+        { label: 'Cars', path: '/cars' }
+    ];
 
     return (
         <Box sx={footerStyles.root(theme, true)}>
@@ -70,7 +73,7 @@ const Footer = ({ detail = false }: { detail?: boolean }) => {
                     ))}
                     <Box>
                         <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                            Get the Spooter app
+                            Get the Spotter app
                         </Typography>
                         <Box sx={footerStyles.appLinkBox}>
                             <Box component="img" sx={footerStyles.appBadge} src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" />
@@ -83,7 +86,7 @@ const Footer = ({ detail = false }: { detail?: boolean }) => {
 
                 <Box sx={footerStyles.bottomBar(isMobile)}>
                     <Box sx={footerStyles.legalLinks(isMobile)}>
-                        <Typography variant="caption" color="text.secondary">© {new Date().getFullYear()} SPOOTER</Typography>
+                        <Typography variant="caption" color="text.secondary">© {new Date().getFullYear()} SPOTTER</Typography>
                         {legalLinks.map((link) => (
                             <Link key={link} href="#" underline="hover" color="text.secondary" sx={{ fontSize: '0.75rem' }}>
                                 {link}
@@ -102,21 +105,16 @@ const Footer = ({ detail = false }: { detail?: boolean }) => {
 
                 <Box sx={footerStyles.partnerBar(isMobile)}>
                     <Box sx={footerStyles.partnerLinks}>
-                        {partnerLinks.map((partner, index) => (
-                            <Typography
-                                key={partner}
-                                variant={index === 0 ? "subtitle2" : "caption"}
-                                fontWeight="bold"
+                        {appRoutes.map((route) => (
+                            <Link
+                                key={route.path}
+                                href={route.path}
+                                underline="hover"
+                                color="text.secondary"
+                                sx={{ fontSize: '0.875rem', fontWeight: 500 }}
                             >
-                                {partner}
-                            </Typography>
-                        ))}
-                    </Box>
-                    <Box sx={footerStyles.settingLinks}>
-                        {settingLinks.map((setting) => (
-                            <Typography key={setting} variant="caption">
-                                {setting}
-                            </Typography>
+                                {route.label}
+                            </Link>
                         ))}
                     </Box>
                 </Box>

@@ -3,6 +3,7 @@ import { type HotelResult } from '@/services/serpApi';
 import { hotelCardStyles } from '@/styles/components/Hotels/HotelCard.style';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import StarIcon from '@mui/icons-material/Star';
+import { useState } from 'react';
 
 interface HotelCardProps {
     hotel: HotelResult;
@@ -10,6 +11,7 @@ interface HotelCardProps {
 
 const HotelCard = ({ hotel }: HotelCardProps) => {
     const theme = useTheme();
+    const [showAllAmenities, setShowAllAmenities] = useState(false);
 
     return (
         <Paper sx={hotelCardStyles.root(theme)} elevation={1}>
@@ -34,14 +36,14 @@ const HotelCard = ({ hotel }: HotelCardProps) => {
                         {hotel.name}
                     </Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mb: 1, color: 'text.secondary' }}>
-                        <LocationOnIcon sx={{ fontSize: 18 }} />
+                        <LocationOnIcon sx={{ fontSize: 18, color: 'primary.main' }} />
                         <Typography variant="body2">
                             {hotel.description || 'View on map'}
                         </Typography>
                     </Box>
 
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mt: 2 }}>
-                        {hotel.amenities?.slice(0, 4).map((amenity, idx) => (
+                        {hotel.amenities?.slice(0, showAllAmenities ? hotel.amenities.length : 4).map((amenity, idx) => (
                             <Chip
                                 key={idx}
                                 label={amenity}
@@ -51,9 +53,23 @@ const HotelCard = ({ hotel }: HotelCardProps) => {
                             />
                         ))}
                         {hotel.amenities?.length > 4 && (
-                            <Typography variant="caption" sx={{ alignSelf: 'center', ml: 0.5 }}>
-                                +{hotel.amenities.length - 4} more
-                            </Typography>
+                            <Chip
+                                label={showAllAmenities ? 'Show less' : `+${hotel.amenities.length - 4} more`}
+                                size="small"
+                                variant="filled"
+                                onClick={() => setShowAllAmenities(!showAllAmenities)}
+                                sx={{
+                                    borderRadius: 1.5,
+                                    fontSize: '0.7rem',
+                                    cursor: 'pointer',
+                                    bgcolor: theme.palette.mode === 'dark' ? 'primary.dark' : 'primary.light',
+                                    color: theme.palette.mode === 'dark' ? 'white' : 'primary.main',
+                                    '&:hover': {
+                                        bgcolor: theme.palette.mode === 'dark' ? 'primary.main' : 'primary.main',
+                                        color: 'white'
+                                    }
+                                }}
+                            />
                         )}
                     </Box>
                 </Box>

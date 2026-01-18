@@ -26,6 +26,7 @@ const Hotels = () => {
             if (filters.minPrice !== null && price < filters.minPrice) return false;
             if (filters.maxPrice !== null && price > filters.maxPrice) return false;
             if (filters.rating !== null && (hotel.overall_rating || 0) < filters.rating) return false;
+            // Note: propertyType filter not applied - HotelResult doesn't include type property yet
 
             return true;
         });
@@ -38,7 +39,7 @@ const Hotels = () => {
                     Find Your Perfect Stay
                 </Typography>
                 <Typography variant="h6" sx={{ opacity: 0.9, maxWidth: 600, mt: 1 }}>
-                    Discover hotels and vacation rentals worldwide with Spooter
+                    Discover hotels and vacation rentals worldwide with Spotter
                 </Typography>
             </Box>
 

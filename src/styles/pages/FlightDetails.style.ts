@@ -424,7 +424,7 @@ export const flightDetailsStyles = {
     },
 
     markerTimeText: {
-        color: 'white',
+        color: 'primary.contrastText',
         fontSize: '0.7rem',
         fontWeight: 900
     },

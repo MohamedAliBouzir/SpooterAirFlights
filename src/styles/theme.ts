@@ -5,8 +5,18 @@ export const getTheme = (mode: 'light' | 'dark') => {
     return createTheme({
         palette: {
             mode,
-            primary: palette.primary,
-            secondary: palette.secondary,
+            primary: mode === 'dark' ? {
+                main: '#ffffff',
+                light: '#ffffff',
+                dark: palette.primary.dark, // Keep it dark for backgrounds/overlays
+                contrastText: palette.primary.main, // Dark text on white buttons
+            } : palette.primary,
+            secondary: mode === 'dark' ? {
+                main: '#4fc3f7', // Lighter blue for dark mode
+                light: '#8bf6ff',
+                dark: '#0093c4',
+                contrastText: palette.primary.main,
+            } : palette.secondary,
             background: {
                 default: mode === 'dark' ? palette.background.dark : palette.background.default,
                 paper: mode === 'dark' ? palette.primary.light : palette.background.paper,

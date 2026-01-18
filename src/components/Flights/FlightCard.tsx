@@ -52,7 +52,7 @@ const FlightCard = ({ flight }: FlightCardProps) => {
                     </Box>
 
                     <Box sx={flightCardStyles.mobilePriceSection}>
-                        <Typography variant="h6" fontWeight="900" sx={flightCardStyles.mobilePrice(theme)}>
+                        <Typography variant="h6" fontWeight="900" sx={flightCardStyles.mobilePrice}>
                             ${flight.price}
                         </Typography>
                     </Box>
@@ -99,7 +99,7 @@ const FlightCard = ({ flight }: FlightCardProps) => {
                         {flight.isBestDeal && (
                             <Box sx={flightCardStyles.tag}>Best Deal</Box>
                         )}
-                        <Typography variant="h5" fontWeight="900" sx={flightCardStyles.price(theme)}>
+                        <Typography variant="h5" fontWeight="900" sx={flightCardStyles.price}>
                             ${flight.price}
                         </Typography>
                         <Typography variant="caption" color="text.secondary" sx={flightCardStyles.priceLabel}>
